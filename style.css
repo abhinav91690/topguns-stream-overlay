@@ -1,0 +1,32 @@
+body {
+  margin: 0; /* Remove default body margins */
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: transparent; /* Make background fully transparent */
+  z-index: 100; /* Ensure overlay is on top */
+  display: flex;
+  flex-direction: column; /* Align items vertically */
+  justify-content: space-between; /* Position image at top, other content at bottom */
+}
+
+.overlay-image {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 150px; /* Adjust image size as needed */
+  height: auto;
+  z-index: 101; /* Ensure image is above other elements */
+}
+
+.content {
+  /* Style for your content (text, social links, etc.) */
+  padding: 20px;
+  color: white;
+  text-align: center;
+}
