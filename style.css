@@ -17,8 +17,8 @@ body {
 
 .overlay-image {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 15px;
+  right: 30px;
   width: 150px; /* Adjust image size as needed */
   height: auto;
   z-index: 101; /* Ensure image is above other elements */
