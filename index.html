@@ -1,14 +1,54 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Streaming Overlay</title>
-  <link rel="stylesheet" href="style.css">
-</head>
+    <title>Cricket Score Overlay</title>
+    <link rel="stylesheet" href="styles.css"> </head>
 <body>
-  <div class="overlay">
-    <img src="topgunsUTDPulte.png" alt="Overlay Image" class="overlay-image">
-    <div class="content">
-      </div>
-  </div>
+    <div class="overlay">
+        <img src="topgunsUTDPulte.png" alt="Overlay Image" class="overlay-image">
+
+        <div id="score-overlay">
+            <div class="batsman-info">
+                <div class="batsman-row">
+                    <span class="batsman-name" id="batsman1-name">BATSMAN 1</span> <span class="batsman-runs-balls" id="batsman1-runs-balls">(0)</span>
+                </div>
+                <div class="batsman-row">
+                    <span class="batsman-name" id="batsman2-name">BATSMAN 2</span> <span class="batsman-runs-balls" id="batsman2-runs-balls">(0)</span>
+                </div>
+            </div>
+
+            <div class="team-info">
+                <div class="team-name" id="team1-name">Team 1</div>
+                <div class="score-and-overs">
+                    <span class="score" id="team1-score">0</span>/ <span class="wickets" id="team1-wickets">0</span> <span class="overs" id="team1-overs-display">(0.0)</span>
+                </div>
+            </div>
+
+            <div class="team-info">
+                <div class="team-name" id="team2-name">Team 2</div>
+                <div class="score-and-overs">
+                    <span class="score" id="team2-score">0</span>/ <span class="wickets" id="team2-wickets">0</span> <span class="overs" id="team2-overs-display">(0.0)</span>
+                </div>
+            </div>
+
+            <div class="bowler-info">
+                <div class="bowler-row">
+                    <span class="bowler-label" id="bowler-name">BOWLER NAME</span> <span class="bowler-value" id="bowler-figures">0-00 (0.0)</span>
+                </div>
+                <div class="bowler-row">
+                    <div class="ball-by-ball-container" id="ball-by-ball">
+                        <div class="ball-indicator"></div>
+                        <div class="ball-indicator"></div>
+                        <div class="ball-indicator"></div>
+                        <div class="ball-indicator"></div>
+                        <div class="ball-indicator"></div>
+                        <div class="ball-indicator"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>  
+
+<script src="script.js"></script> 
 </body>
 </html>
