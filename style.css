@@ -24,9 +24,177 @@ body {
   z-index: 101; /* Ensure image is above other elements */
 }
 
-.content {
-  /* Style for your content (text, social links, etc.) */
-  padding: 20px;
-  color: white;
-  text-align: center;
+#score-overlay {
+    position: fixed;
+    top: auto;
+    bottom: 10px;
+    left: 50%; /* Position the left edge at the horizontal center */
+    transform: translateX(-50%); /* Shift the overlay back by half its width to center it perfectly */
+
+    background-color: whitesmoke;  /* #004d40;*/
+    color: #1846A0;
+    font-family: monospace, monospace;
+    font-size: 18px;
+    font-weight: bold;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    padding: 8px 15px;
+    border-radius: 400px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
+    width: 90%;
+    border: 1px solid #ccc;     /* Subtle light gray border to define the edge */
+    justify-content: center;
+    align-items: center;
+    max-width: 1200px;
+}
+
+.team-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-right: 15px;
+    padding-right: 15px;
+    border-right: 1px solid #ddd;
+}
+
+.team-name {
+    font-weight: bold;
+    font-size: 1.1em;
+    margin-bottom: 2px;
+}
+
+.score-and-overs {
+    display: flex;
+    align-items: baseline;
+}
+
+.score {
+    font-size: 1.4em;
+    margin-right: 5px;
+}
+
+.wickets {
+    font-size: 1em;
+    color: #1846A0;
+}
+
+.overs {
+    font-size: 0.9em;
+    color: #6080BD;
+    margin-left: 5px;
+}
+
+
+.match-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-right: 15px;
+    padding-right: 15px;
+    border-right: 1px solid #ddd;
+}
+
+.match-detail-row {
+    margin-bottom: 2px;
+}
+
+.match-label {
+    font-size: 0.9em;
+    color: #ccc;
+    margin-right: 5px;
+}
+
+.match-value {
+    font-weight: normal;
+}
+
+.batsman-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-right: 15px;
+    padding-right: 15px;
+    border-right: 1px solid #ddd;
+}
+
+.batsman-row {
+    margin-bottom: 2px;
+}
+
+.batsman-name {
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.batsman-runs-balls {
+    font-size: 0.9em;
+    color: #6080BD;
+}
+
+
+.bowler-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-right: 10px;
+    padding-right: 10px;
+/*    border-right: 1px solid #ddd;*/
+}
+
+.bowler-row {
+    margin-bottom: 2px;
+}
+
+.bowler-label {
+/*    font-size: 0.9em;*/
+    color: #1846A0;
+    margin-right: 5px;
+    font-weight: bold;
+}
+
+.bowler-value {
+/*    font-size: 0.9em;*/
+    color: #6080BD;
+    margin-right: 5px;
+    font-weight: bold;
+}
+
+/* Ball by ball styles */
+.ball-by-ball-container {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+}
+
+.ball-indicator {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #ddd;
+    color: black;
+    margin-right: 5px;
+    border: 1px solid #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.9em;
+    font-weight: bold;
+}
+
+/* Ball outcome specific styles */
+.ball-indicator.run-1, .ball-indicator.run-2, .ball-indicator.run-3, .ball-indicator.run-4, .ball-indicator.run-5, .ball-indicator.run-6 { background-color: lightgreen; color: black; }
+.ball-indicator.run-4 { background-color: darkgreen; color: white; }
+.ball-indicator.run-6 { background-color: darkgreen; color: white; }
+.ball-indicator.wicket, .ball-indicator.out { background-color: red; color: white; }
+.ball-indicator.wide, .ball-indicator.wd { background-color: orange; color: black; }
+.ball-indicator.no-ball, .ball-indicator.nb { background-color: yellow; color: black; }
+.ball-indicator.leg-bye {
+    background-color: lightcyan; /* Light blue/cyan color for leg-bye */
+    color: black;
+}
+.ball-indicator.ball-default {
+    background-color: white; /* Or any default color you prefer */
+    color: black;
 }
