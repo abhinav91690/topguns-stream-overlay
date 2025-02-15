@@ -11,7 +11,6 @@ function updateScore() {
         // Display an error message on the overlay if matchId is missing
         document.getElementById('team1-score').textContent = 'Missing matchId';
         document.getElementById('team2-score').textContent = 'Missing matchId';
-        document.getElementById('current-overs').textContent = 'Missing matchId';
         return; // Stop further execution if matchId is missing
     }
 
@@ -42,16 +41,6 @@ function updateScore() {
                 document.getElementById('secondInnings').style.display = 'none';
                 document.getElementById('result').style.display = 'none';
             }
-            else if (data.values.isMatchEnded === "1")
-            {
-                // Match ended
-                document.getElementById('secondInnings').style.display = 'flex';
-                document.getElementById('result').style.display = 'flex';
-                const matchResult = data.values.result || 'Match Result';
-                document.getElementById('match-result').textContent = `${matchResult}`;
-                const scoreNeeded = data.values.showMsgForScoreNeeded || '';
-                document.getElementById('score-needed').textContent = `${scoreNeeded}`;
-            }
             else
             {
                 // Second Innings
@@ -79,28 +68,31 @@ function updateScore() {
                 const scoreNeeded = data.values.showMsgForScoreNeeded || '-';
                 document.getElementById('score-needed').innerHTML = `${scoreNeeded}`;
 
-                // document.getElementById('score-needed').append() = scoreNeeded;
+                if (data.values.isMatchEnded === "1")
+                {
+                    // Match ended
 
-                document.getElementById('secondInnings').style.display = 'flex';
-                document.getElementById('result').style.display = 'none';
+                    const matchResult = data.values.result || 'Match Result';
+                    document.getElementById('match-result').textContent = `${matchResult}`;
+
+                    document.getElementById('secondInnings').style.display = 'flex';
+                    document.getElementById('result').style.display = 'flex';
+                }
+                else
+                {
+                    // Second Innings
+
+                    document.getElementById('secondInnings').style.display = 'flex';
+                    document.getElementById('result').style.display = 'none';
+                }
             }
 
             /*
-            const team1Name = data.values.t1Name || 'Team 1';
-            const team1Score = data.values.t1Total || '0';
-            const team1Wickets = data.values.t1Wickets || '0';
-            const team1Overs = data.values.t1Overs || '0.0';
-
-            const team2Name = data.values.t2Name || 'Team 2';
-            const team2Score = data.values.t2Total || '0';
-            const team2Wickets = data.values.t2Wickets || '0';
-            const team2Overs = data.values.t2Overs || '0.0';
-
-
             const matchName = data.values.seriesName || 'Match Name';
             const runRate = data.values.runrate || '0.00';
             const partnership = data.values.currentPartnershipMap?.partnershipTotalRuns || '0';
-*/
+            */
+
             const batsman1Name = data.values.batsman1Name || 'Batsman 1';
             const batsman1Runs = data.values.batsman1Runs || '0';
             const batsman1Balls = data.values.batsman1Balls || '0';
@@ -129,12 +121,12 @@ function updateScore() {
             const ballContainer = document.getElementById('ball-by-ball');
             ballContainer.innerHTML = ''; // Clear existing indicators
 
-            for (let i = 0; i < ballsArray.length; i++) { // Display max 6 balls
-                const ballOutcome = ballsArray[i];
+            for (const element of ballsArray) {
+                const ballOutcome = element;
                 const ballIndicator = document.createElement('div');
                 ballIndicator.classList.add('ball-indicator');
                 ballIndicator.textContent = ballOutcome
-                ballIndicator.classList.add(getBallStyleClass(ballOutcome)); // Add style class
+                ballIndicator.classList.add(getBallStyleClass(ballOutcome));
                 ballContainer.appendChild(ballIndicator);
             }
 
@@ -145,7 +137,6 @@ function updateScore() {
             // Basic error display
             document.getElementById('team1-score').textContent = 'Error';
             document.getElementById('team2-score').textContent = 'Error';
-            document.getElementById('current-overs').textContent = 'Error';
         });
     }
 

@@ -183,11 +183,12 @@ body {
 .ball-indicator.run-4 { background-color: darkgreen; color: white; }
 .ball-indicator.run-6 { background-color: darkgreen; color: white; }
 .ball-indicator.wicket, .ball-indicator.out { background-color: red; color: white; }
-.ball-indicator.wide, .ball-indicator.wd { background-color: orange; color: black; }
-.ball-indicator.no-ball, .ball-indicator.nb { background-color: yellow; color: black; }
+.ball-indicator.wide, .ball-indicator.wd { background-color: orange; color: black; width: 35px; border-radius: 40%;}
+.ball-indicator.no-ball, .ball-indicator.nb { background-color: yellow; color: black;width: 35px; border-radius: 40%; }
 .ball-indicator.leg-bye {
     background-color: lightcyan; /* Light blue/cyan color for leg-bye */
     color: black;
+    width: 35px; border-radius: 40%;
 }
 .ball-indicator.ball-default {
     background-color: white; /* Or any default color you prefer */
