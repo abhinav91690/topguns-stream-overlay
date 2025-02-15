@@ -1,4 +1,6 @@
 // script.js
+import {mock_1stInnings, mock_2ndInnings, mock_matchEnded, mock_toss} from './mockData.js';
+
 function updateScore() {
     // **Dynamically construct API URL from query parameter**
     const urlParams = new URLSearchParams(window.location.search);
@@ -24,6 +26,49 @@ function updateScore() {
         })
         .then(data => {
             // ... (Data extraction and HTML updating - same as before) ...
+            // data = mock_matchEnded;
+            /*
+            const matchName = data.values.seriesName || 'Match Name';
+            const runRate = data.values.runrate || '0.00';
+            const partnership = data.values.currentPartnershipMap?.partnershipTotalRuns || '0';
+            */
+
+            const batsman1Name = data.values.batsman1Name || 'Batsman 1';
+            const batsman1Runs = data.values.batsman1Runs || '0';
+            const batsman1Balls = data.values.batsman1Balls || '0';
+            const batsman2Name = data.values.batsman2Name || 'Batsman 2';
+            const batsman2Runs = data.values.batsman2Runs || '0';
+            const batsman2Balls = data.values.batsman2Balls || '0';
+
+            const bowlerName = data.values.bowlerName || 'Bowler Name';
+            const bowlerWickets = data.values.bowlerWickets || '0';
+            const bowlerRunsGiven = data.values.bowlerRuns || '0';
+            const bowlerOvers = data.values.bowlerOvers || '0.0';
+
+            const ballsArray = data.balls || [];
+            // const ballsArray = ["1wd", ".", "1", "2", "3", "4", "5", "6", "5nb", "2nb", "1lb", "2", "1b", "1", "W"]; //Sample array
+
+            // Update HTML elements - Scoreboard data
+            document.getElementById('batsman1-name').textContent = batsman1Name;
+            document.getElementById('batsman1-runs-balls').textContent = `(${batsman1Runs} off ${batsman1Balls})`;
+            document.getElementById('batsman2-name').textContent = batsman2Name;
+            document.getElementById('batsman2-runs-balls').textContent = `(${batsman2Runs} off ${batsman2Balls})`;
+
+            document.getElementById('bowler-name').textContent = bowlerName;
+            document.getElementById('bowler-figures').textContent = `${bowlerWickets}/${bowlerRunsGiven} (${bowlerOvers})`;
+
+            // Update Ball-by-ball indicators
+            const ballContainer = document.getElementById('ball-by-ball');
+            ballContainer.innerHTML = ''; // Clear existing indicators
+
+            for (const element of ballsArray) {
+                const ballOutcome = element;
+                const ballIndicator = document.createElement('div');
+                ballIndicator.classList.add('ball-indicator');
+                ballIndicator.textContent = ballOutcome
+                ballIndicator.classList.add(getBallStyleClass(ballOutcome));
+                ballContainer.appendChild(ballIndicator);
+            }
 
             if(data.values.isSecondInningsStarted === "false")
             {
@@ -68,68 +113,25 @@ function updateScore() {
                 const scoreNeeded = data.values.showMsgForScoreNeeded || '-';
                 document.getElementById('score-needed').innerHTML = `${scoreNeeded}`;
 
-                if (data.values.isMatchEnded === "1")
-                {
-                    // Match ended
-
-                    const matchResult = data.values.result || 'Match Result';
-                    document.getElementById('match-result').textContent = `${matchResult}`;
-
-                    document.getElementById('secondInnings').style.display = 'flex';
-                    document.getElementById('result').style.display = 'flex';
-                }
-                else
+                if (data.values.isMatchEnded === "0")
                 {
                     // Second Innings
 
                     document.getElementById('secondInnings').style.display = 'flex';
                     document.getElementById('result').style.display = 'none';
                 }
+                else
+                {
+
+                    // Match ended
+                    const matchResult = data.values.result || 'Match Result';
+                    document.getElementById('match-result').textContent = `${matchResult}`;
+                    document.getElementById('score-needed').remove();
+
+                    document.getElementById('secondInnings').style.display = 'flex';
+                    document.getElementById('result').style.display = 'flex';
+                }
             }
-
-            /*
-            const matchName = data.values.seriesName || 'Match Name';
-            const runRate = data.values.runrate || '0.00';
-            const partnership = data.values.currentPartnershipMap?.partnershipTotalRuns || '0';
-            */
-
-            const batsman1Name = data.values.batsman1Name || 'Batsman 1';
-            const batsman1Runs = data.values.batsman1Runs || '0';
-            const batsman1Balls = data.values.batsman1Balls || '0';
-            const batsman2Name = data.values.batsman2Name || 'Batsman 2';
-            const batsman2Runs = data.values.batsman2Runs || '0';
-            const batsman2Balls = data.values.batsman2Balls || '0';
-
-            const bowlerName = data.values.bowlerName || 'Bowler Name';
-            const bowlerWickets = data.values.bowlerWickets || '0';
-            const bowlerRunsGiven = data.values.bowlerRuns || '0';
-            const bowlerOvers = data.values.bowlerOvers || '0.0';
-
-            const ballsArray = data.balls || [];
-            // const ballsArray = ["1wd", "0", "1", "2", "3", "4", "5", "6", "5nb", "2nb", "1lb", "2", "1b", "1", "W"]; //Sample array
-
-            // Update HTML elements - Scoreboard data
-            document.getElementById('batsman1-name').textContent = batsman1Name;
-            document.getElementById('batsman1-runs-balls').textContent = `(${batsman1Runs} off ${batsman1Balls})`;
-            document.getElementById('batsman2-name').textContent = batsman2Name;
-            document.getElementById('batsman2-runs-balls').textContent = `(${batsman2Runs} off ${batsman2Balls})`;
-
-            document.getElementById('bowler-name').textContent = bowlerName;
-            document.getElementById('bowler-figures').textContent = `${bowlerWickets}/${bowlerRunsGiven} (${bowlerOvers})`;
-
-            // Update Ball-by-ball indicators
-            const ballContainer = document.getElementById('ball-by-ball');
-            ballContainer.innerHTML = ''; // Clear existing indicators
-
-            for (const element of ballsArray) {
-                const ballOutcome = element;
-                const ballIndicator = document.createElement('div');
-                ballIndicator.classList.add('ball-indicator');
-                ballIndicator.textContent = ballOutcome
-                ballIndicator.classList.add(getBallStyleClass(ballOutcome));
-                ballContainer.appendChild(ballIndicator);
-            }
-
 
         })
         .catch(error => {
@@ -146,12 +148,14 @@ function updateScore() {
 
         if (ballOutcome === 'w') {
             return 'wicket'; // Wicket (W, wicket, out)
-        } else if (ballOutcome === 'wd' || ballOutcome.endsWith('wd')) { // Wide (wd, ends with wd, wide)
+        } else if (ballOutcome === 'wd' || ballOutcome.endsWith('wd')) { // Wide (wd, ends with wd)
             return 'wide';
-        } else if (ballOutcome === 'nb' || ballOutcome.endsWith('nb')) { // No Ball (nb, ends with nb, no-ball)
+        } else if (ballOutcome === 'nb' || ballOutcome.endsWith('nb')) { // No Ball (nb, ends with nb)
             return 'no-ball';
-        } else if (ballOutcome === '1lb' || ballOutcome.endsWith('lb')) { // No Ball (nb, ends with nb, no-ball)
+        } else if (ballOutcome === '1lb' || ballOutcome.endsWith('lb')) { // Leg Bye (1lb, ends with lb)
             return 'leg-bye';
+        } else if (ballOutcome === '1b' || ballOutcome.endsWith('b')) { // Bye (nb, ends with nb, no-ball)
+            return 'bye';
         } else if (ballOutcome === '.') {
             return 'dot'; // Dot (.) or dot
         } else if (['1', '2', '3', '4', '5', '6'].includes(ballOutcome)) { // Runs (numbers "1" to "6" directly)

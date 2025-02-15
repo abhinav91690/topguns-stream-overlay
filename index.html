@@ -6,6 +6,9 @@
 <body>
     <div class="overlay">
         <img src="topgunsUTDPulte.png" alt="Overlay" class="overlay-image">
+        <div id="result" class="score-overlay">
+            <div class="wicket" id="match-result">Team 2 won by 0 Wickets</div>
+        </div>
         <div id="firstInnings" class="score-overlay">
             <div class="batsman-info">
                 <div class="batsman-row">
@@ -44,14 +47,10 @@
             <span class="wickets" id="s-team-name">Team 1   </span>
             <span class="wickets" id="s-team-score">0</span>/<span class="wickets" id="s-team-wickets">0</span> <span class="overs" id="s-team-overs-display">(0.0)</span>
             </div>
-            <div class="spacer"></div>
-            <div class="wicket" id="score-needed">Team 2 Need 0 From Overs 0 RRR</div>
-        </div>
-        <div id="result" class="score-overlay">
-            <div class="wicket" id="match-result">Team 2 won by 0 Wickets</div>
+            <div class="wicket spacer" id="score-needed">Team 2 Need 0 From Overs 0 RRR</div>
         </div>
     </div>
 
-<script src="script.js"></script> 
+<script src="script.js" type="module"></script>
 </body>
 </html>

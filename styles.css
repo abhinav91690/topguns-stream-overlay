@@ -29,7 +29,7 @@ body {
 .score-overlay {
     background-color: whitesmoke;  /* #004d40;*/
     color: #1846A0;
-    font-family: monospace, monospace;
+    font-family: monospace;
     font-size: 18px;
     font-weight: bold;
     z-index: 1000;
@@ -39,10 +39,8 @@ body {
     border-radius: 400px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     overflow: hidden;
-    /*width: 40%;*/
     border: 1px solid #ccc;     /* Subtle light gray border to define the edge */
     justify-content: center;
-    /*max-width: 800px;*/
 }
 
 .team-info {
@@ -180,18 +178,23 @@ body {
 
 /* Ball outcome specific styles */
 .ball-indicator.run-1, .ball-indicator.run-2, .ball-indicator.run-3, .ball-indicator.run-4, .ball-indicator.run-5, .ball-indicator.run-6 { background-color: lightgreen; color: black; }
-.ball-indicator.run-4 { background-color: darkgreen; color: white; }
-.ball-indicator.run-6 { background-color: darkgreen; color: white; }
+/*.ball-indicator.run-4 { background-color: darkgreen; color: white; }*/
+/*.ball-indicator.run-6 { background-color: darkgreen; color: white; }*/
 .ball-indicator.wicket, .ball-indicator.out { background-color: red; color: white; }
 .ball-indicator.wide, .ball-indicator.wd { background-color: orange; color: black; width: 35px; border-radius: 40%;}
 .ball-indicator.no-ball, .ball-indicator.nb { background-color: yellow; color: black;width: 35px; border-radius: 40%; }
 .ball-indicator.leg-bye {
-    background-color: lightcyan; /* Light blue/cyan color for leg-bye */
+    background-color: plum;
     color: black;
     width: 35px; border-radius: 40%;
 }
+.ball-indicator.bye {
+    background-color: pink;
+    color: black;
+    width: 25px; border-radius: 40%;
+}
 .ball-indicator.ball-default {
-    background-color: white; /* Or any default color you prefer */
+    background-color: white;
     color: black;
 }
 
@@ -208,5 +211,5 @@ body {
 }
 
 .spacer {
-    padding-left: 50px;
+    padding-left: 40px;
 }
