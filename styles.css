@@ -12,7 +12,8 @@ body {
   z-index: 100; /* Ensure overlay is on top */
   display: flex;
   flex-direction: column; /* Align items vertically */
-  justify-content: space-between; /* Position image at top, other content at bottom */
+  align-items: center; /* Center horizontally */
+  justify-content: flex-end; /* THIS IS KEY: Push content to the bottom */
 }
 
 .overlay-image {
@@ -24,12 +25,7 @@ body {
   z-index: 101; /* Ensure image is above other elements */
 }
 
-#score-overlay {
-    position: fixed;
-    top: auto;
-    bottom: 10px;
-    left: 50%; /* Position the left edge at the horizontal center */
-    transform: translateX(-50%); /* Shift the overlay back by half its width to center it perfectly */
+.score-overlay {
     background-color: whitesmoke;  /* #004d40;*/
     color: #1846A0;
     font-family: monospace, monospace;
@@ -42,11 +38,10 @@ body {
     border-radius: 400px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     overflow: hidden;
-    width: 90%;
+    width: 40%;
     border: 1px solid #ccc;     /* Subtle light gray border to define the edge */
     justify-content: center;
-    align-items: center;
-    max-width: 1200px;
+    max-width: 800px;
 }
 
 .team-info {
@@ -196,4 +191,8 @@ body {
 .ball-indicator.ball-default {
     background-color: white; /* Or any default color you prefer */
     color: black;
+}
+
+#secondInnings {
+    justify-content: space-evenly;
 }
