@@ -26,9 +26,19 @@ function updateScore() {
         .then(data => {
             // ... (Data extraction and HTML updating - same as before) ...
 
-            if(data.values.isSecondInningsStarted === false)
+            if(data.values.isSecondInningsStarted === "false")
             {
                 // First Innings
+                const teamName = data.values.t1Name || 'Team 1';
+                const teamScore = data.values.t1Total || '0';
+                const teamWickets = data.values.t1Wickets || '0';
+                const teamOvers = data.values.t1Overs || '0.0';
+
+                document.getElementById('team-name').textContent = teamName;
+                document.getElementById('team-score').textContent = teamScore;
+                document.getElementById('team-wickets').textContent = teamWickets;
+                document.getElementById('team-overs-display').textContent = `(${teamOvers})`;
+
                 document.getElementById('secondInnings').style.display = 'none';
                 document.getElementById('result').style.display = 'none';
             }
@@ -45,22 +55,37 @@ function updateScore() {
             else
             {
                 // Second Innings
-                document.getElementById('secondInnings').style.display = 'flex';
-                document.getElementById('result').style.display = 'none';
+
+                const teamName = data.values.t2Name || 'Team 2';
+                const teamScore = data.values.t2Total || '0';
+                const teamWickets = data.values.t2Wickets || '0';
+                const teamOvers = data.values.t2Overs || '0.0';
+
+                document.getElementById('team-name').textContent = teamName;
+                document.getElementById('team-score').textContent = teamScore;
+                document.getElementById('team-wickets').textContent = teamWickets;
+                document.getElementById('team-overs-display').textContent = `(${teamOvers})`;
 
                 const team1Name = data.values.t1Name || 'Team 1';
                 const team1Score = data.values.t1Total || '0';
                 const team1Wickets = data.values.t1Wickets || '0';
                 const team1Overs = data.values.t1Overs || '0.0';
 
-                const scoreNeeded = data.values.showMsgForScoreNeeded || '-';
-                document.getElementById('score-needed').textContent = `${scoreNeeded}`;
                 document.getElementById('s-team-name').textContent = team1Name;
                 document.getElementById('s-team-score').textContent = team1Score;
                 document.getElementById('s-team-wickets').textContent = team1Wickets;
                 document.getElementById('s-team-overs-display').textContent = `(${team1Overs})`;
+
+                const scoreNeeded = data.values.showMsgForScoreNeeded || '-';
+                document.getElementById('score-needed').innerHTML = `${scoreNeeded}`;
+
+                // document.getElementById('score-needed').append() = scoreNeeded;
+
+                document.getElementById('secondInnings').style.display = 'flex';
+                document.getElementById('result').style.display = 'none';
             }
 
+            /*
             const team1Name = data.values.t1Name || 'Team 1';
             const team1Score = data.values.t1Total || '0';
             const team1Wickets = data.values.t1Wickets || '0';
@@ -75,7 +100,7 @@ function updateScore() {
             const matchName = data.values.seriesName || 'Match Name';
             const runRate = data.values.runrate || '0.00';
             const partnership = data.values.currentPartnershipMap?.partnershipTotalRuns || '0';
-
+*/
             const batsman1Name = data.values.batsman1Name || 'Batsman 1';
             const batsman1Runs = data.values.batsman1Runs || '0';
             const batsman1Balls = data.values.batsman1Balls || '0';
@@ -99,19 +124,6 @@ function updateScore() {
 
             document.getElementById('bowler-name').textContent = bowlerName;
             document.getElementById('bowler-figures').textContent = `${bowlerWickets}/${bowlerRunsGiven} (${bowlerOvers})`;
-
-            document.getElementById('team-name').textContent = team2Name;
-            document.getElementById('team-score').textContent = team2Score;
-            document.getElementById('team-wickets').textContent = team2Wickets;
-            document.getElementById('team-overs-display').textContent = `(${team2Overs})`;
-
-            document.getElementById('s-team-name').textContent = team1Name;
-            document.getElementById('s-team-score').textContent = team1Score;
-            document.getElementById('s-team-wickets').textContent = team1Wickets;
-            document.getElementById('s-team-overs-display').textContent = `(${team1Overs})`;
-
-
-
 
             // Update Ball-by-ball indicators
             const ballContainer = document.getElementById('ball-by-ball');
