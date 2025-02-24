@@ -57,26 +57,16 @@ function updateScore() {
             document.getElementById('bowler-name').textContent = bowlerName;
             document.getElementById('bowler-figures').textContent = `${bowlerWickets}/${bowlerRunsGiven} (${bowlerOvers})`;
 
-            // Update Ball-by-ball indicators
-            const ballContainer = document.getElementById('ball-by-ball');
-            ballContainer.innerHTML = ''; // Clear existing indicators
+            var teamName,teamScore,teamWickets,teamOvers;
 
-            for (const element of ballsArray) {
-                const ballOutcome = element;
-                const ballIndicator = document.createElement('div');
-                ballIndicator.classList.add('ball-indicator');
-                ballIndicator.textContent = ballOutcome
-                ballIndicator.classList.add(getBallStyleClass(ballOutcome));
-                ballContainer.appendChild(ballIndicator);
-            }
 
             if(data.values.isSecondInningsStarted === "false")
             {
                 // First Innings
-                const teamName = data.values.t1Name || 'Team 1';
-                const teamScore = data.values.t1Total || '0';
-                const teamWickets = data.values.t1Wickets || '0';
-                const teamOvers = data.values.t1Overs || '0.0';
+                teamName = data.values.t1Name || 'Team 1';
+                teamScore = data.values.t1Total || '0';
+                teamWickets = data.values.t1Wickets || '0';
+                teamOvers = data.values.t1Overs || '0.0';
 
                 document.getElementById('team-name').textContent = teamName;
                 document.getElementById('team-score').textContent = teamScore;
@@ -90,10 +80,10 @@ function updateScore() {
             {
                 // Second Innings
 
-                const teamName = data.values.t2Name || 'Team 2';
-                const teamScore = data.values.t2Total || '0';
-                const teamWickets = data.values.t2Wickets || '0';
-                const teamOvers = data.values.t2Overs || '0.0';
+                teamName = data.values.t2Name || 'Team 2';
+                teamScore = data.values.t2Total || '0';
+                teamWickets = data.values.t2Wickets || '0';
+                teamOvers = data.values.t2Overs || '0.0';
 
                 document.getElementById('team-name').textContent = teamName;
                 document.getElementById('team-score').textContent = teamScore;
@@ -131,6 +121,33 @@ function updateScore() {
                     document.getElementById('secondInnings').style.display = 'flex';
                     document.getElementById('result').style.display = 'flex';
                 }
+            }
+
+            // Update Ball-by-ball indicators
+            const ballContainer = document.getElementById('ball-by-ball');
+            ballContainer.innerHTML = ''; // Clear existing indicators
+
+            for (const element of ballsArray) {
+                const ballOutcome = element;
+                const ballIndicator = document.createElement('div');
+                ballIndicator.classList.add('ball-indicator');
+                ballIndicator.textContent = ballOutcome
+                ballIndicator.classList.add(getBallStyleClass(ballOutcome));
+                ballContainer.appendChild(ballIndicator);
+            }
+
+            const ballsRemaining = 6 - teamOvers.split('.')[1];3
+            if (ballsRemaining === 6 && ballsArray.length > 1 )
+            {
+                // Game ended with complete over example - matchId=1963
+            }
+            else
+            {
+            for (let i=0;i<ballsRemaining;i++) {
+                const ballIndicator = document.createElement('div');
+                ballIndicator.classList.add('ball-indicator');
+                ballContainer.appendChild(ballIndicator);
+            }
             }
 
         })
