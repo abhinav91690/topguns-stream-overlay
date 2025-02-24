@@ -26,7 +26,7 @@ function updateScore() {
         })
         .then(data => {
             // ... (Data extraction and HTML updating - same as before) ...
-            // data = mock_matchEnded;
+            // data = mock_1stInnings;
             /*
             const matchName = data.values.seriesName || 'Match Name';
             const runRate = data.values.runrate || '0.00';
@@ -46,7 +46,7 @@ function updateScore() {
             const bowlerOvers = data.values.bowlerOvers || '0.0';
 
             const ballsArray = data.balls || [];
-            // const ballsArray = ["1wd", ".", "1", "2", "3", "4", "5", "6", "5nb", "2nb", "1lb", "2", "1b", "1", "W"]; //Sample array
+            // const ballsArray = ["1wd", ".", "1", "2", "3", "4", "5", "6", "5nb", "2nb", "1lb", "1b", "W"]; //Sample array
 
             // Update HTML elements - Scoreboard data
             document.getElementById('batsman1-name').textContent = batsman1Name;
