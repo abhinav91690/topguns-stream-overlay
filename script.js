@@ -33,7 +33,7 @@ function updateScore() {
             const partnership = data.values.currentPartnershipMap?.partnershipTotalRuns || '0';
             */
 
-            const batsman1Name = data.values.batsman1Name || 'Batsman 1';
+            const batsman1Name = data.values.batsman1Name || 'Batsman 1 *';
             const batsman1Runs = data.values.batsman1Runs || '0';
             const batsman1Balls = data.values.batsman1Balls || '0';
             const batsman2Name = data.values.batsman2Name || 'Batsman 2';
@@ -50,10 +50,10 @@ function updateScore() {
             // const ballsArray = ["1wd", ".", "1", "2", "3", "4", "5", "6", "5nb", "2nb", "1lb", "1b", "W"]; //Sample array
 
             // Update HTML elements - Scoreboard data
-            document.getElementById('batsman1-name').textContent = batsman1Name;
-            document.getElementById('batsman1-runs-balls').textContent = `(${batsman1Runs} off ${batsman1Balls})`;
+            document.getElementById('batsman1-name').textContent =  `${batsman1Name} *`;
+            document.getElementById('batsman1-runs-balls').textContent = `${batsman1Runs} (${batsman1Balls})`;
             document.getElementById('batsman2-name').textContent = batsman2Name;
-            document.getElementById('batsman2-runs-balls').textContent = `(${batsman2Runs} off ${batsman2Balls})`;
+            document.getElementById('batsman2-runs-balls').textContent = `${batsman2Runs} (${batsman2Balls})`;
 
             document.getElementById('bowler-name').textContent = bowlerName;
             document.getElementById('bowler-figures').textContent = `${bowlerWickets}/${bowlerRunsGiven} (${bowlerOvers})`;
