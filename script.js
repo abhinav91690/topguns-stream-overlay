@@ -10,10 +10,8 @@ function updateScore() {
 
     if (!matchId) {
         console.error('matchId query parameter is missing in the URL.');
-        // Display an error message on the overlay if matchId is missing
-        document.getElementById('team1-score').textContent = 'Missing matchId';
-        document.getElementById('team2-score').textContent = 'Missing matchId';
-        return; // Stop further execution if matchId is missing
+        document.getElementById('team-name').textContent = 'Missing matchId';
+        return;
     }
 
 
@@ -26,14 +24,14 @@ function updateScore() {
         })
         .then(data => {
             // ... (Data extraction and HTML updating - same as before) ...
-            // data = mock_1stInnings;
+            // data = mock_matchEnded;
             /*
             const matchName = data.values.seriesName || 'Match Name';
             const runRate = data.values.runrate || '0.00';
             const partnership = data.values.currentPartnershipMap?.partnershipTotalRuns || '0';
             */
 
-            const batsman1Name = data.values.batsman1Name || 'Batsman 1';
+            const batsman1Name = data.values.batsman1Name || 'Batsman 1 *';
             const batsman1Runs = data.values.batsman1Runs || '0';
             const batsman1Balls = data.values.batsman1Balls || '0';
             const batsman2Name = data.values.batsman2Name || 'Batsman 2';
@@ -46,13 +44,14 @@ function updateScore() {
             const bowlerOvers = data.values.bowlerOvers || '0.0';
 
             const ballsArray = data.balls || [];
+            // const ballsArray = ["1wd", ".", "1", "2", "3", "4", "5", "6"]; //Sample array
             // const ballsArray = ["1wd", ".", "1", "2", "3", "4", "5", "6", "5nb", "2nb", "1lb", "1b", "W"]; //Sample array
 
             // Update HTML elements - Scoreboard data
-            document.getElementById('batsman1-name').textContent = batsman1Name;
-            document.getElementById('batsman1-runs-balls').textContent = `(${batsman1Runs} off ${batsman1Balls})`;
+            document.getElementById('batsman1-name').textContent =  `${batsman1Name} *`;
+            document.getElementById('batsman1-runs-balls').textContent = `${batsman1Runs} (${batsman1Balls})`;
             document.getElementById('batsman2-name').textContent = batsman2Name;
-            document.getElementById('batsman2-runs-balls').textContent = `(${batsman2Runs} off ${batsman2Balls})`;
+            document.getElementById('batsman2-runs-balls').textContent = `${batsman2Runs} (${batsman2Balls})`;
 
             document.getElementById('bowler-name').textContent = bowlerName;
             document.getElementById('bowler-figures').textContent = `${bowlerWickets}/${bowlerRunsGiven} (${bowlerOvers})`;
@@ -70,8 +69,8 @@ function updateScore() {
 
                 document.getElementById('team-name').textContent = teamName;
                 document.getElementById('team-score').textContent = teamScore;
-                document.getElementById('team-wickets').textContent = teamWickets;
-                document.getElementById('team-overs-display').textContent = `(${teamOvers})`;
+                document.getElementById('team-wickets').textContent = `/${teamWickets}`;
+                document.getElementById('team-overs').textContent = `(${teamOvers})`;
 
                 document.getElementById('secondInnings').style.display = 'none';
                 document.getElementById('result').style.display = 'none';
@@ -87,18 +86,18 @@ function updateScore() {
 
                 document.getElementById('team-name').textContent = teamName;
                 document.getElementById('team-score').textContent = teamScore;
-                document.getElementById('team-wickets').textContent = teamWickets;
-                document.getElementById('team-overs-display').textContent = `(${teamOvers})`;
+                document.getElementById('team-wickets').textContent = `/${teamWickets}`;
+                document.getElementById('team-overs').textContent = `(${teamOvers})`;
 
                 const team1Name = data.values.t1Name || 'Team 1';
                 const team1Score = data.values.t1Total || '0';
                 const team1Wickets = data.values.t1Wickets || '0';
                 const team1Overs = data.values.t1Overs || '0.0';
 
-                document.getElementById('s-team-name').textContent = team1Name;
-                document.getElementById('s-team-score').textContent = team1Score;
-                document.getElementById('s-team-wickets').textContent = team1Wickets;
-                document.getElementById('s-team-overs-display').textContent = `(${team1Overs})`;
+                document.getElementById('second-team-name').textContent = team1Name;
+                document.getElementById('second-team-score').textContent = team1Score;
+                document.getElementById('second-team-wickets').textContent = team1Wickets;
+                document.getElementById('second-team-overs').textContent = `(${team1Overs})`;
 
                 const scoreNeeded = data.values.showMsgForScoreNeeded || '-';
                 document.getElementById('score-needed').innerHTML = `${scoreNeeded}`;
@@ -116,7 +115,9 @@ function updateScore() {
                     // Match ended
                     const matchResult = data.values.result || 'Match Result';
                     document.getElementById('match-result').textContent = `${matchResult}`;
-                    document.getElementById('score-needed').remove();
+                    document.getElementById('score-needed').style.display = 'none';
+                    // document.getElementById('batsman-info').style.display = 'none';
+                    // document.getElementById('bowler-info').style.display = 'none';
 
                     document.getElementById('secondInnings').style.display = 'flex';
                     document.getElementById('result').style.display = 'flex';
@@ -153,9 +154,7 @@ function updateScore() {
         })
         .catch(error => {
             console.error('Error fetching score data:', error);
-            // Basic error display
-            document.getElementById('team1-score').textContent = 'Error';
-            document.getElementById('team2-score').textContent = 'Error';
+            document.getElementById('team-name').textContent = 'Error';
         });
     }
 
