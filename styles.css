@@ -230,22 +230,28 @@ body {
 }
 
 .ball-indicator.ball-default {
-    background-color: var(--bg-white);       /* Use variable for white background */
+    background-color: var(--bg-white);
     color: black;
 }
 
-#secondInnings {
-    justify-content: space-evenly;
-    font-size: 16px;
-}
-
 .numberColorClass {
-    /* Add your desired styling here */
-    font-weight: bold;  /* Example: Make the numbers bold */
-    /*color: var(--number-color);     !* Example: Use the number color variable *!*/ /* Use variable for number color if you have a default */
-    /* Add any other styles you want */
+    font-weight: normal;
 }
 
 .spacer {
     padding-left: 40px;
+}
+
+#secondInnings {
+    justify-content: space-evenly;
+    font-size: 18px;
+    color: var(--text-primary-2);
+    padding: 5px 15px 5px 15px ;
+}
+
+#result {
+    justify-content: space-evenly;
+    font-size: 24px;
+    color: var(--text-primary-2);
+    padding: 5px 15px 5px 15px ;
 }
