@@ -5,6 +5,7 @@
 
     /* Text Colors */
     --text-primary: #1846A0;          /* Example: Primary text color (like for bowler label) */
+    --text-primary-2: #1a237e;         /* Example: Primary text color (like for bowler label) */
     --text-secondary: #6080BD;        /* Example: Secondary text color (like for overs, batsman runs-balls) */
     --text-light: #ccc;              /* Example: Light text color (like for match labels) */
     --text-white: white;
@@ -65,30 +66,37 @@ body {
     color: var(--brand-primary);         /* Use variable for primary brand color */
     font-family: monospace;
     font-size: 18px;
-    font-weight: bold;
+    font-weight: normal;
     z-index: 1000;
     display: flex;
     align-items: center;
-    padding: 8px 15px;
+    padding: 0px 15px;
     border-radius: 400px;
     box-shadow: 0 4px 8px var(--shadow-color); /* Use variable for shadow color */
-    overflow: hidden;
+    overflow: visible;
     border: 1px solid var(--border-light-gray);     /* Use variable for light gray border */
     justify-content: center;
+    white-space: nowrap; /*prevent the score overlay from wrapping*/
+
 }
 
-.team-info {
-    display: flex;
+.scorecard-pill {
+    display: inline-flex;
+    align-items: center;
     flex-direction: column;
-    align-items: flex-start;
+    justify-content: center;
+    padding: 8px 16px; /* Adjust padding as needed */
     margin-right: 15px;
-    padding-right: 15px;
-    border-right: 1px solid var(--border-medium-gray); /* Use variable for medium gray border */
+    margin-left: 15px;
+    background-color: #1a237e; /* Dark blue color */
+    color: var(--text-white); /* White text for contrast */
+    border-radius: 30px; /* Adjust radius for pill shape */
+    font-size: 14px; /* Adjust font size as needed */
 }
 
 .team-name {
     font-weight: bold;
-    font-size: 1.1em;
+    font-size: 20px;
     margin-bottom: 2px;
 }
 
@@ -98,101 +106,55 @@ body {
 }
 
 .score {
-    font-size: 1.4em;
-    margin-right: 5px;
+    font-size: 20px;
 }
 
 .wickets {
-    font-size: 1em;
-    color: var(--brand-primary);         /* Use variable for primary brand color */
+    font-size: 20px;
+    color: var(--text-white); /* White text for contrast */
 }
 
 .overs {
-    font-size: 0.9em;
-    color: var(--text-secondary);        /* Use variable for secondary text color */
+    font-size: 15px;
+    color: var(--text-white); /* White text for contrast */
     margin-left: 5px;
 }
 
-
-.match-info {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin-right: 15px;
-    padding-right: 15px;
-    border-right: 1px solid var(--border-medium-gray); /* Use variable for medium gray border */
-}
-
-.match-detail-row {
-    margin-bottom: 2px;
-}
-
-.match-label {
-    font-size: 0.9em;
-    color: var(--text-light);           /* Use variable for light text color */
-    margin-right: 5px;
-}
-
-.match-value {
-    font-weight: normal;
-}
-
-.batsman-info {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin-right: 15px;
-    padding-right: 15px;
-    border-right: 1px solid var(--border-medium-gray); /* Use variable for medium gray border */
-}
-
-.batsman-row {
-    margin-bottom: 2px;
-}
-
-.batsman-name {
-    font-weight: bold;
-    margin-right: 5px;
-}
-
-.batsman-runs-balls {
-    font-size: 0.9em;
-    color: var(--text-secondary);        /* Use variable for secondary text color */
-}
-
-
+.batsman-info,
 .bowler-info {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    margin-right: 10px;
-    padding-right: 10px;
-    /*    border-right: 1px solid var(--border-medium-gray);*/ /* Commented out border */
+    min-width: 250px;
 }
 
+.batsman-row,
 .bowler-row {
     margin-bottom: 2px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    width: 100%;
 }
 
-.bowler-label {
-    /*    font-size: 0.9em;*/
-    color: var(--text-primary);          /* Use variable for primary text color */
-    margin-right: 5px;
-    font-weight: bold;
+.batsman-name,
+.bowler-name {
+    display: inline-flex;
+    white-space: nowrap;
 }
 
-.bowler-value {
-    /*    font-size: 0.9em;*/
-    color: var(--text-secondary);        /* Use variable for secondary text color */
-    margin-right: 5px;
-    font-weight: bold;
+.batsman-runs-balls,
+.bowler-figures {
+    display: inline-flex;
+    font-size: 15px;
+    color: var(--text-secondary);
+    padding-left: 10px;
 }
 
 /* Ball by ball styles */
 .ball-by-ball-container {
     display: flex;
     align-items: center;
-    margin-left: 10px;
 }
 
 .ball-indicator {
@@ -206,8 +168,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 0.9em;
-    font-weight: bold;
+    font-size: 15px;
+    /*font-weight: bold;*/
 }
 
 /* Ball outcome specific styles */
@@ -238,33 +200,32 @@ body {
     background-color: var(--bg-orange);
     border-color: var(--bg-orange);
     color: black;
-    font-size: 0.6em;
+    font-size: 11px;
 }
 
 .ball-indicator.no-ball {
     background-color: var(--bg-pink);
     border-color: var(--bg-pink);
     color: black;
-    font-size: 0.6em;
+    font-size: 11px;
 }
 
 .ball-indicator.leg-bye {
     background-color: var(--bg-plum);
     border-color: var(--bg-plum);
     color: black;
-    font-size: 0.6em;
+    font-size: 11px;
 }
 
 .ball-indicator.bye {
     background-color: var(--bg-yellow);
     border-color: var(--bg-yellow);
     color: black;
-    font-size: 0.6em;
+    font-size: 11px;
 }
 
 .ball-indicator.dot {
     color: var(--border-primary);
-    font-size: 1.2em;
 }
 
 .ball-indicator.ball-default {

@@ -46,6 +46,7 @@ function updateScore() {
             const bowlerOvers = data.values.bowlerOvers || '0.0';
 
             const ballsArray = data.balls || [];
+            // const ballsArray = ["1wd", ".", "1", "2", "3", "4", "5", "6"]; //Sample array
             // const ballsArray = ["1wd", ".", "1", "2", "3", "4", "5", "6", "5nb", "2nb", "1lb", "1b", "W"]; //Sample array
 
             // Update HTML elements - Scoreboard data
@@ -70,7 +71,7 @@ function updateScore() {
 
                 document.getElementById('team-name').textContent = teamName;
                 document.getElementById('team-score').textContent = teamScore;
-                document.getElementById('team-wickets').textContent = teamWickets;
+                document.getElementById('team-wickets').textContent = `/${teamWickets}`;
                 document.getElementById('team-overs-display').textContent = `(${teamOvers})`;
 
                 document.getElementById('secondInnings').style.display = 'none';
@@ -87,7 +88,7 @@ function updateScore() {
 
                 document.getElementById('team-name').textContent = teamName;
                 document.getElementById('team-score').textContent = teamScore;
-                document.getElementById('team-wickets').textContent = teamWickets;
+                document.getElementById('team-wickets').textContent = `/${teamWickets}`;
                 document.getElementById('team-overs-display').textContent = `(${teamOvers})`;
 
                 const team1Name = data.values.t1Name || 'Team 1';
