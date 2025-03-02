@@ -5,8 +5,13 @@ function updateScore() {
     // **Dynamically construct API URL from query parameter**
     const urlParams = new URLSearchParams(window.location.search);
     const matchId = urlParams.get('matchId'); // Get matchId from query parameter
+    const hideLogo = urlParams.get('logo'); // Get logo from query parameter
     const clubId = '1089463'; // Hardcoded clubId (from your example)
     const apiUrl = `https://cricclubs.com/liveScoreOverlayData.do?clubId=${clubId}&matchId=${matchId}`;
+
+    if(!hideLogo) {
+        document.getElementById('overlay-image').style.display = 'none';
+    }
 
     if (!matchId) {
         console.error('matchId query parameter is missing in the URL.');
@@ -54,7 +59,7 @@ function updateScore() {
             document.getElementById('batsman2-runs-balls').textContent = `${batsman2Runs} (${batsman2Balls})`;
 
             document.getElementById('bowler-name').textContent = bowlerName;
-            document.getElementById('bowler-figures').textContent = `${bowlerWickets}/${bowlerRunsGiven} (${bowlerOvers})`;
+            document.getElementById('bowler-figures').textContent = `${bowlerWickets}-${bowlerRunsGiven} (${bowlerOvers})`;
 
             var teamName,teamScore,teamWickets,teamOvers;
 
