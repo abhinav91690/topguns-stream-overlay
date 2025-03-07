@@ -18,11 +18,11 @@ function updateScore() {
         document.getElementById('overlay-image').style.display = 'none';
     }
 
-    // if (!matchId) {
-    //     console.error('matchId query parameter is missing in the URL.');
-    //     document.getElementById('team-name').textContent = 'Missing matchId';
-    //     return;
-    // }
+    if (!matchId) {
+        console.error('matchId query parameter is missing in the URL.');
+        document.getElementById('team-name').textContent = 'Missing matchId';
+        return;
+    }
 
 
     fetch(apiUrl)
@@ -34,7 +34,7 @@ function updateScore() {
         })
         .then(data => {
             // ... (Data extraction and HTML updating - same as before) ...
-            data = mock_1stInnings;
+            // data = mock_1stInnings;
             /*
             const matchName = data.values.seriesName || 'Match Name';
             const runRate = data.values.runrate || '0.00';
