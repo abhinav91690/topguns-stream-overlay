@@ -1,6 +1,11 @@
 // script.js
 import {mock_1stInnings, mock_2ndInnings, mock_matchEnded, mock_toss} from './mockData.js';
 
+const imageCache = {
+    team1Logo: { url: null, image: null },
+    team2Logo: { url: null, image: null },
+};
+
 function updateScore() {
     // **Dynamically construct API URL from query parameter**
     const urlParams = new URLSearchParams(window.location.search);
@@ -13,11 +18,11 @@ function updateScore() {
         document.getElementById('overlay-image').style.display = 'none';
     }
 
-    if (!matchId) {
-        console.error('matchId query parameter is missing in the URL.');
-        document.getElementById('team-name').textContent = 'Missing matchId';
-        return;
-    }
+    // if (!matchId) {
+    //     console.error('matchId query parameter is missing in the URL.');
+    //     document.getElementById('team-name').textContent = 'Missing matchId';
+    //     return;
+    // }
 
 
     fetch(apiUrl)
@@ -29,12 +34,37 @@ function updateScore() {
         })
         .then(data => {
             // ... (Data extraction and HTML updating - same as before) ...
-            // data = mock_matchEnded;
+            data = mock_1stInnings;
             /*
             const matchName = data.values.seriesName || 'Match Name';
             const runRate = data.values.runrate || '0.00';
             const partnership = data.values.currentPartnershipMap?.partnershipTotalRuns || '0';
             */
+
+            const team1Logo = `https://cricclubs.com` + data.values.firstLogo || '';
+            const team2Logo = `https://cricclubs.com` + data.values.secondLogo || '';
+
+            if (imageCache.team1Logo.url !== team1Logo || !imageCache.team1Logo.image) {
+                loadImage(team1Logo)
+                    .then(img => {
+                        imageCache.team1Logo = { url: team1Logo, image: img } ;
+                        document.getElementById('batting-team-logo').src = img.src;
+                    })
+                    .catch(error => {
+                        console.error('Error loading first logo:', error);
+                    });
+            }
+
+            if (imageCache.team2Logo.url !== team2Logo || !imageCache.team2Logo.image) {
+                loadImage(team2Logo)
+                    .then(img => {
+                        imageCache.team2Logo = { url: team2Logo, image: img } ;
+                        document.getElementById('bowling-team-logo').src = img.src;
+                    })
+                    .catch(error => {
+                        console.error('Error loading first logo:', error);
+                    });
+            }
 
             const batsman1Name = data.values.batsman1Name || 'Batsman 1 *';
             const batsman1Runs = data.values.batsman1Runs || '0';
@@ -164,26 +194,35 @@ function updateScore() {
     }
 
 
-    function getBallStyleClass(ballOutcome) {
-        ballOutcome = ballOutcome.toLowerCase(); // Still convert to lowercase for easier comparison
+function getBallStyleClass(ballOutcome) {
+    ballOutcome = ballOutcome.toLowerCase(); // Still convert to lowercase for easier comparison
 
-        if (ballOutcome === 'w') {
-            return 'wicket'; // Wicket (W, wicket, out)
-        } else if (ballOutcome === 'wd' || ballOutcome.endsWith('wd')) { // Wide (wd, ends with wd)
-            return 'wide';
-        } else if (ballOutcome === 'nb' || ballOutcome.endsWith('nb')) { // No Ball (nb, ends with nb)
-            return 'no-ball';
-        } else if (ballOutcome === '1lb' || ballOutcome.endsWith('lb')) { // Leg Bye (1lb, ends with lb)
-            return 'leg-bye';
-        } else if (ballOutcome === '1b' || ballOutcome.endsWith('b')) { // Bye (nb, ends with nb, no-ball)
-            return 'bye';
-        } else if (ballOutcome === '.') {
-            return 'dot'; // Dot (.) or dot
-        } else if (['1', '2', '3', '4', '5', '6'].includes(ballOutcome)) { // Runs (numbers "1" to "6" directly)
-            return `run-${ballOutcome}`;
-        }
-        return 'ball-default'; // Default for any unhandled outcomes
+    if (ballOutcome === 'w') {
+        return 'wicket'; // Wicket (W, wicket, out)
+    } else if (ballOutcome === 'wd' || ballOutcome.endsWith('wd')) { // Wide (wd, ends with wd)
+        return 'wide';
+    } else if (ballOutcome === 'nb' || ballOutcome.endsWith('nb')) { // No Ball (nb, ends with nb)
+        return 'no-ball';
+    } else if (ballOutcome === '1lb' || ballOutcome.endsWith('lb')) { // Leg Bye (1lb, ends with lb)
+        return 'leg-bye';
+    } else if (ballOutcome === '1b' || ballOutcome.endsWith('b')) { // Bye (nb, ends with nb, no-ball)
+        return 'bye';
+    } else if (ballOutcome === '.') {
+        return 'dot'; // Dot (.) or dot
+    } else if (['1', '2', '3', '4', '5', '6'].includes(ballOutcome)) { // Runs (numbers "1" to "6" directly)
+        return `run-${ballOutcome}`;
     }
+    return 'ball-default'; // Default for any unhandled outcomes
+}
 
-    updateScore(); // Initial call
-    setInterval(updateScore, 5000); // Update every 5 seconds
+function loadImage(url) {
+    return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.onload = () => resolve(img);
+        img.onerror = () => reject(new Error(`Failed to load image: ${url}`));
+        img.src = url;
+    });
+}
+
+updateScore(); // Initial call
+setInterval(updateScore, 5000); // Update every 5 seconds

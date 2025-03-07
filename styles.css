@@ -61,8 +61,36 @@ body {
     z-index: 101; /* Ensure image is above other elements */
 }
 
+.team-logo {
+    height: 55px;
+    width: 55px;
+}
+
+.batting-team-info {
+    display: inline-flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8px 8px;
+    background-color: var(--text-primary); /* Dark blue color */
+    color: var(--text-white); /* White text for contrast */
+    border-radius: 0 400px 400px 0; /* Only round the right side */
+    min-width: 150px;
+}
+
+.bowling-team-info {
+    display: inline-flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8px 8px;
+    background-color: var(--text-primary); /* Dark blue color */
+    color: var(--text-white); /* White text for contrast */
+    border-radius: 400px 0 0 400px; /* Only round the right side */
+    min-width: 150px;
+}
+
 .score-overlay {
-    background-color: var(--bg-white);  /* Use variable for whitesmoke background */
     color: var(--brand-primary);         /* Use variable for primary brand color */
     font-family: monospace;
     font-size: 18px;
@@ -74,10 +102,10 @@ body {
     border-radius: 400px;
     box-shadow: 0 4px 8px var(--shadow-color); /* Use variable for shadow color */
     overflow: visible;
-    border: 1px solid var(--border-light-gray);     /* Use variable for light gray border */
+    /*border: 1px solid var(--border-light-gray);     !* Use variable for light gray border *!*/
     justify-content: center;
     white-space: nowrap; /*prevent the score overlay from wrapping*/
-
+    background: linear-gradient(to top, gainsboro, whitesmoke);
 }
 
 .scorecard-pill {
@@ -86,9 +114,7 @@ body {
     flex-direction: column;
     justify-content: center;
     padding: 8px 16px; /* Adjust padding as needed */
-    margin-right: 15px;
-    margin-left: 15px;
-    background-color: #1a237e; /* Dark blue color */
+    background-color: var(--text-primary); /* Dark blue color */
     color: var(--text-white); /* White text for contrast */
     border-radius: 30px; /* Adjust radius for pill shape */
     font-size: 14px; /* Adjust font size as needed */
@@ -126,7 +152,8 @@ body {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    min-width: 400px;
+    flex: 1;
+    padding: 0 15px;
 }
 
 .batsman-row,
@@ -259,6 +286,11 @@ body {
 
 .spacer {
     padding-left: 40px;
+}
+
+#firstInnings {
+    width: 100%;
+    justify-content: space-between;
 }
 
 #secondInnings {
