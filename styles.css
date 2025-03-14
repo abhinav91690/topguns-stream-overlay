@@ -66,30 +66,25 @@ body {
     width: 55px;
 }
 
-.batting-team-info {
-    display: inline-flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
-    padding: 8px 8px;
-    background-color: var(--text-primary); /* Dark blue color */
-    color: var(--text-white); /* White text for contrast */
-    border-radius: 0 400px 400px 0; /* Only round the right side */
-    min-width: 150px;
-}
-
+.batting-team-info,
 .bowling-team-info {
     display: inline-flex;
     align-items: center;
     flex-direction: column;
     justify-content: center;
     padding: 8px 8px;
-    background-color: var(--text-primary); /* Dark blue color */
-    color: var(--text-white); /* White text for contrast */
-    border-radius: 400px 0 0 400px; /* Only round the right side */
+    border: 3px solid var(--border-primary);
     min-width: 150px;
+    background: radial-gradient( gainsboro, white);
 }
 
+.batting-team-info {
+    border-radius: 0 400px 400px 0;
+}
+
+.bowling-team-info {
+    border-radius: 400px 0 0 400px;
+}
 .score-overlay {
     color: var(--brand-primary);         /* Use variable for primary brand color */
     font-family: monospace;
@@ -98,11 +93,10 @@ body {
     z-index: 1000;
     display: flex;
     align-items: center;
-    padding: 0px 15px;
+    padding: 0 15px;
     border-radius: 400px;
     box-shadow: 0 4px 8px var(--shadow-color); /* Use variable for shadow color */
     overflow: visible;
-    /*border: 1px solid var(--border-light-gray);     !* Use variable for light gray border *!*/
     justify-content: center;
     white-space: nowrap; /*prevent the score overlay from wrapping*/
     background: linear-gradient(to top, gainsboro, whitesmoke);
@@ -197,10 +191,9 @@ body {
     justify-content: center;
     align-items: center;
     font-size: 15px;
-    /*font-weight: bold;*/
+    font-weight: bold;
 }
 
-/* Ball outcome specific styles */
 .ball-indicator.run-1, .ball-indicator.run-2, .ball-indicator.run-3, .ball-indicator.run-5 {
     background-color: var(--border-primary);
     color: var(--text-white);
