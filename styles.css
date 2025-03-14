@@ -14,8 +14,8 @@
     --bg-white: whitesmoke;          /* Example: Whitesmoke background */
     --bg-transparent: transparent;    /* Example: Transparent background */
     --bg-light-gray: #ddd;           /* Example: Light gray background (like ball indicator default) */
-    --bg-green: lightgreen;       /* Example: Green for runs */
-    --bg-red: red;            /* Example: Red for wickets */
+    --bg-green: green;       /* Example: Green for runs */
+    --bg-red: #ED2939;            /* Example: Red for wickets */
     --bg-orange: orange;         /* Example: Orange for wides */
     --bg-yellow: yellow;        /* Example: Yellow for no-balls */
     --bg-plum: plum;          /* Example: Plum for leg-byes */
@@ -202,13 +202,13 @@ body {
 .ball-indicator.run-4 {
     background-color: var(--bg-green);
     border-color: var(--bg-green);
-    color: black;
+    color: var(--text-white);
 }
 
 .ball-indicator.run-6 {
     background-color: var(--bg-green);
     border-color: var(--bg-green);
-    color: black;
+    color: var(--text-white);
 }
 
 .ball-indicator.wicket {
