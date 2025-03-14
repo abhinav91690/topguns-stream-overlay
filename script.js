@@ -91,7 +91,7 @@ function updateScore() {
             document.getElementById('bowler-name').textContent = bowlerName;
             document.getElementById('bowler-figures').textContent = `${bowlerWickets}-${bowlerRunsGiven} (${bowlerOvers})`;
 
-            var teamName,teamScore,teamWickets,teamOvers;
+            let teamName,teamScore,teamWickets,teamOvers;
 
 
             if(data.values.isSecondInningsStarted === "false")
@@ -172,7 +172,7 @@ function updateScore() {
                 ballContainer.appendChild(ballIndicator);
             }
 
-            const ballsRemaining = 6 - teamOvers.split('.')[1];3
+            const ballsRemaining = 6 - teamOvers.split('.')[1];
             if (ballsRemaining === 6 && ballsArray.length > 1 )
             {
                 // Game ended with complete over example - matchId=1963
