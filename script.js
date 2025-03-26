@@ -10,12 +10,20 @@ function updateScore() {
     // **Dynamically construct API URL from query parameter**
     const urlParams = new URLSearchParams(window.location.search);
     const matchId = urlParams.get('matchId'); // Get matchId from query parameter
-    const hideLogo = urlParams.get('logo'); // Get logo from query parameter
+    const logo = urlParams.get('logo'); // Get logo from query parameter
     const clubId = '1089463'; // Hardcoded clubId (from your example)
     const apiUrl = `https://cricclubs.com/liveScoreOverlayData.do?clubId=${clubId}&matchId=${matchId}`;
 
-    if(!hideLogo) {
-        document.getElementById('overlay-image').style.display = 'none';
+    const overlayImage = document.getElementById('overlay-image');
+
+    if (!logo) {
+        overlayImage.style.display = 'none';
+    } else {
+        const logoMap = {
+            '1': './images/PulteHomes.png',
+            '2': './images/PerryHomes.png',
+        };
+        overlayImage.src = logoMap[logo] || '';
     }
 
     if (!matchId) {

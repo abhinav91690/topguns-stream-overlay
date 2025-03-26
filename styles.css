@@ -54,8 +54,8 @@ body {
 
 .overlay-image {
     position: absolute;
-    top: 20px;
-    right: 15px;
+    top: 5px;
+    right: 5px;
     width: 150px; /* Adjust image size as needed */
     height: auto;
     z-index: 101; /* Ensure image is above other elements */
