@@ -410,7 +410,7 @@ export const mock_matchEnded = {
     "view": 1,
     "values": {
         "isSecondInningsStarted": "true",
-        "t1RR": "7.85",
+        "t1RR": "7.84",
         "showMsgForScoreNeeded": "",
         "t1Code": "GRY",
         "batsman2LastName": "Padimalla",
