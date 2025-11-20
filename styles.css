@@ -1,41 +1,42 @@
 :root {
     /* Brand Colors */
-    --brand-primary: #1846A0;         /* Example: Primary brand color */
-    --brand-secondary: #004d40;      /* Example: Secondary brand color (if applicable - you had #004d40 commented out) */
+    --brand-primary: #1846A0;
+    --brand-secondary: #004d40;
 
     /* Text Colors */
-    --text-primary: #1a237e;          /* Example: Primary text color (like for bowler label) */
-    --text-primary-2: #1a237e;         /* Example: Primary text color (like for bowler label) */
-    --text-secondary: #1a237e;        /* Example: Secondary text color (like for overs, batsman runs-balls) */
-    --text-light: #ccc;              /* Example: Light text color (like for match labels) */
+    --text-primary: #1a237e;
+    --text-secondary: #1a237e;
+    --text-light: #ccc;
     --text-white: white;
 
     /* Background Colors */
-    --bg-white: whitesmoke;          /* Example: Whitesmoke background */
-    --bg-transparent: transparent;    /* Example: Transparent background */
-    --bg-light-gray: #ddd;           /* Example: Light gray background (like ball indicator default) */
-    --bg-green: green;       /* Example: Green for runs */
-    --bg-red: #ED2939;            /* Example: Red for wickets */
-    --bg-orange: orange;         /* Example: Orange for wides */
-    --bg-yellow: yellow;        /* Example: Yellow for no-balls */
-    --bg-plum: plum;          /* Example: Plum for leg-byes */
-    --bg-pink: pink;             /* Example: Pink for byes */
-    --bg-light-blue: lightblue;             /* Example: lightblue for 4 */
+    --bg-white: whitesmoke;
+    --bg-transparent: transparent;
+    --bg-light-gray: #ddd;
+    --bg-green: green;
+    --bg-red: #ED2939;
+    --bg-orange: orange;
+    --bg-yellow: yellow;
+    --bg-plum: plum;
+    --bg-pink: pink;
+    --bg-light-blue: lightblue;
 
     /* Border Colors */
-    --border-light-gray: #ccc;        /* Example: Light gray border */
-    --border-medium-gray: #ddd;       /* Example: Medium gray border */
-    --border-white: #fff;            /* Example: White border */
-    --border-primary: #1846A0;            /* Example: Primary border */
+    --border-light-gray: #ccc;
+    --border-medium-gray: #ddd;
+    --border-white: #fff;
+    --border-primary: #1846A0;
 
     /* Other Colors */
-    --shadow-color: rgba(0,0,0,0.1); /* Example: Shadow color */
-    --number-color: #007bff;         /* Example: Color for numbers (if you want a default - you commented this out) */
+    --shadow-color: rgba(0,0,0,0.1);
 }
 
 body {
-    margin: 0; /* Remove default body margins */
+    margin: 0;
+    font-family: sans-serif; /* Added default font */
 }
+
+/* --- Layout --- */
 
 .overlay {
     text-transform: uppercase;
@@ -44,22 +45,24 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: var(--bg-transparent); /* Use variable for transparent background */
-    z-index: 100; /* Ensure overlay is on top */
+    background-color: var(--bg-transparent);
+    z-index: 100;
     display: flex;
-    flex-direction: column; /* Align items vertically */
-    align-items: center; /* Center horizontally */
-    justify-content: flex-end; /* THIS IS KEY: Push content to the bottom */
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
 }
 
 .overlay-image {
     position: absolute;
     top: 5px;
     right: 5px;
-    width: 150px; /* Adjust image size as needed */
+    width: 150px;
     height: auto;
-    z-index: 101; /* Ensure image is above other elements */
+    z-index: 101;
 }
+
+/* --- Components --- */
 
 .team-logo {
     height: 55px;
@@ -86,7 +89,7 @@ body {
     border-radius: 400px 0 0 400px;
 }
 .score-overlay {
-    color: var(--brand-primary);         /* Use variable for primary brand color */
+    color: var(--brand-primary);
     font-family: monospace;
     font-size: 18px;
     font-weight: normal;
@@ -95,10 +98,10 @@ body {
     align-items: center;
     padding: 0 15px;
     border-radius: 400px;
-    box-shadow: 0 4px 8px var(--shadow-color); /* Use variable for shadow color */
+    box-shadow: 0 4px 8px var(--shadow-color);
     overflow: visible;
     justify-content: center;
-    white-space: nowrap; /*prevent the score overlay from wrapping*/
+    white-space: nowrap;
     background: linear-gradient(to top, gainsboro, whitesmoke);
 }
 
@@ -107,11 +110,11 @@ body {
     align-items: center;
     flex-direction: column;
     justify-content: center;
-    padding: 8px 16px; /* Adjust padding as needed */
-    background-color: var(--text-primary); /* Dark blue color */
-    color: var(--text-white); /* White text for contrast */
-    border-radius: 30px; /* Adjust radius for pill shape */
-    font-size: 14px; /* Adjust font size as needed */
+    padding: 8px 16px;
+    background-color: var(--text-primary);
+    color: var(--text-white);
+    border-radius: 30px;
+    font-size: 14px;
     min-width: 150px;
 }
 
@@ -132,12 +135,12 @@ body {
 
 .wickets {
     font-size: 20px;
-    color: var(--text-white); /* White text for contrast */
+    color: var(--text-white);
 }
 
 .overs {
     font-size: 15px;
-    color: var(--text-white); /* White text for contrast */
+    color: var(--text-white);
     margin-left: 5px;
 }
 
@@ -173,7 +176,8 @@ body {
     padding-left: 10px;
 }
 
-/* Ball by ball styles */
+/* --- Ball by Ball --- */
+
 .ball-by-ball-container {
     display: flex;
     align-items: center;
@@ -183,10 +187,10 @@ body {
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background-color: var(--bg-light-gray);  /* Use variable for light gray background */
+    background-color: var(--bg-light-gray);
     color: black;
     margin-right: 5px;
-    border: 2px solid var(--border-primary);    /* Use variable for white border */
+    border: 2px solid var(--border-primary);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -199,12 +203,7 @@ body {
     color: var(--text-white);
 }
 
-.ball-indicator.run-4 {
-    background-color: var(--bg-green);
-    border-color: var(--bg-green);
-    color: var(--text-white);
-}
-
+.ball-indicator.run-4,
 .ball-indicator.run-6 {
     background-color: var(--bg-green);
     border-color: var(--bg-green);
@@ -264,7 +263,7 @@ body {
     transform: translate(-50%, -50%);
     width: 10px;
     height: 10px;
-    background-color: var(--border-primary); /* Inner bullseye dot color */
+    background-color: var(--border-primary);
     border-radius: 50%;
 }
 
@@ -273,9 +272,7 @@ body {
     color: black;
 }
 
-.numberColorClass {
-    font-weight: normal;
-}
+/* --- Innings & Result --- */
 
 .spacer {
     padding-left: 40px;
@@ -289,13 +286,13 @@ body {
 #secondInnings {
     justify-content: space-evenly;
     font-size: 18px;
-    color: var(--text-primary-2);
-    padding: 5px 15px 5px 15px ;
+    color: var(--text-primary);
+    padding: 5px 15px;
 }
 
 #result {
     justify-content: space-evenly;
     font-size: 24px;
-    color: var(--text-primary-2);
-    padding: 5px 15px 5px 15px ;
+    color: var(--text-primary);
+    padding: 5px 15px;
 }

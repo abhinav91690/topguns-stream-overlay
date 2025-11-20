@@ -1,239 +1,67 @@
 // script.js
-import {mock_1stInnings, mock_2ndInnings, mock_matchEnded, mock_toss} from './mockData.js';
+import { mock_1stInnings, mock_2ndInnings, mock_matchEnded, mock_toss } from './mockData.js';
+
+const CONFIG = {
+    REFRESH_RATE: 5000,
+    DEFAULT_CLUB_ID: '1089463', // LPCL
+    LOGO_MAP: {
+        '1': './images/PulteHomes.png',
+        '2': './images/PerryHomes.png',
+    }
+};
+
+const DOM = {
+    overlayImage: document.getElementById('overlay-image'),
+    battingTeamLogo: document.getElementById('batting-team-logo'),
+    bowlingTeamLogo: document.getElementById('bowling-team-logo'),
+    batsman1Name: document.getElementById('batsman1-name'),
+    batsman1RunsBalls: document.getElementById('batsman1-runs-balls'),
+    batsman2Name: document.getElementById('batsman2-name'),
+    batsman2RunsBalls: document.getElementById('batsman2-runs-balls'),
+    bowlerName: document.getElementById('bowler-name'),
+    bowlerFigures: document.getElementById('bowler-figures'),
+    teamName: document.getElementById('team-name'),
+    teamScore: document.getElementById('team-score'),
+    teamWickets: document.getElementById('team-wickets'),
+    teamOvers: document.getElementById('team-overs'),
+    secondInnings: document.getElementById('secondInnings'),
+    result: document.getElementById('result'),
+    matchResult: document.getElementById('match-result'),
+    secondTeamName: document.getElementById('second-team-name'),
+    secondTeamScore: document.getElementById('second-team-score'),
+    secondTeamWickets: document.getElementById('second-team-wickets'),
+    secondTeamOvers: document.getElementById('second-team-overs'),
+    scoreNeeded: document.getElementById('score-needed'),
+    ballContainer: document.getElementById('ball-by-ball'),
+    batsmanInfo: document.getElementById('batsman-info'),
+    bowlerInfo: document.getElementById('bowler-info'),
+};
 
 const imageCache = {
     team1Logo: { url: null, image: null },
     team2Logo: { url: null, image: null },
 };
 
-function updateScore() {
-    // **Dynamically construct API URL from query parameter**
+function getQueryParams() {
     const urlParams = new URLSearchParams(window.location.search);
-    const matchId = urlParams.get('matchId'); // Get matchId from query parameter
-    const cId = urlParams.get('cId'); // Get clubId from query parameter
-    const logo = urlParams.get('logo'); // Get logo from query parameter
-    let clubId;
-
-    if (!cId) {
-        clubId='1089463'; // LPCL
-    }
-    else
-    {
-        clubId = cId; // Any Other League
-    }
-
-    const apiUrl = `https://cricclubs.com/liveScoreOverlayData.do?clubId=${clubId}&matchId=${matchId}`;
-
-    const overlayImage = document.getElementById('overlay-image');
-
-    if (!logo) {
-        overlayImage.style.display = 'none';
-    } else {
-        const logoMap = {
-            '1': './images/PulteHomes.png',
-            '2': './images/PerryHomes.png',
-        };
-        overlayImage.src = logoMap[logo] || '';
-    }
-
-    if (!matchId) {
-        console.error('matchId query parameter is missing in the URL.');
-        document.getElementById('team-name').textContent = 'Missing matchId';
-        return;
-    }
-
-
-    fetch(apiUrl)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            // ... (Data extraction and HTML updating - same as before) ...
-            // data = mock_1stInnings;
-            /*
-            const matchName = data.values.seriesName || 'Match Name';
-            const runRate = data.values.runrate || '0.00';
-            const partnership = data.values.currentPartnershipMap?.partnershipTotalRuns || '0';
-            */
-
-            const team1Logo = `https://cricclubs.com` + data.values.firstLogo || '';
-            const team2Logo = `https://cricclubs.com` + data.values.secondLogo || '';
-
-            if (imageCache.team1Logo.url !== team1Logo || !imageCache.team1Logo.image) {
-                loadImage(team1Logo)
-                    .then(img => {
-                        imageCache.team1Logo = { url: team1Logo, image: img } ;
-                        document.getElementById('batting-team-logo').src = img.src;
-                    })
-                    .catch(error => {
-                        console.error('Error loading first logo:', error);
-                    });
-            }
-
-            if (imageCache.team2Logo.url !== team2Logo || !imageCache.team2Logo.image) {
-                loadImage(team2Logo)
-                    .then(img => {
-                        imageCache.team2Logo = { url: team2Logo, image: img } ;
-                        document.getElementById('bowling-team-logo').src = img.src;
-                    })
-                    .catch(error => {
-                        console.error('Error loading first logo:', error);
-                    });
-            }
-
-            const batsman1Name = data.values.batsman1Name || 'Batsman 1 *';
-            const batsman1Runs = data.values.batsman1Runs || '0';
-            const batsman1Balls = data.values.batsman1Balls || '0';
-            const batsman2Name = data.values.batsman2Name || 'Batsman 2';
-            const batsman2Runs = data.values.batsman2Runs || '0';
-            const batsman2Balls = data.values.batsman2Balls || '0';
-
-            const bowlerName = data.values.bowlerName || 'Bowler Name';
-            const bowlerWickets = data.values.bowlerWickets || '0';
-            const bowlerRunsGiven = data.values.bowlerRuns || '0';
-            const bowlerOvers = data.values.bowlerOvers || '0.0';
-
-            const ballsArray = data.balls || [];
-            // const ballsArray = ["1wd", ".", "1", "2", "3", "4", "5", "6"]; //Sample array
-            // const ballsArray = ["1wd", ".", "1", "2", "3", "4", "5", "6", "5nb", "2nb", "1lb", "1b", "W"]; //Sample array
-
-            // Update HTML elements - Scoreboard data
-            document.getElementById('batsman1-name').textContent =  `${batsman1Name} *`;
-            document.getElementById('batsman1-runs-balls').textContent = `${batsman1Runs} (${batsman1Balls})`;
-            document.getElementById('batsman2-name').textContent = batsman2Name;
-            document.getElementById('batsman2-runs-balls').textContent = `${batsman2Runs} (${batsman2Balls})`;
-
-            document.getElementById('bowler-name').textContent = bowlerName;
-            document.getElementById('bowler-figures').textContent = `${bowlerWickets}-${bowlerRunsGiven} (${bowlerOvers})`;
-
-            let teamName,teamScore,teamWickets,teamOvers;
-
-
-            if(data.values.isSecondInningsStarted === "false")
-            {
-                // First Innings
-                teamName = data.values.t1Name || 'Team 1';
-                teamScore = data.values.t1Total || '0';
-                teamWickets = data.values.t1Wickets || '0';
-                teamOvers = data.values.t1Overs || '0.0';
-
-                document.getElementById('team-name').textContent = teamName;
-                document.getElementById('team-score').textContent = teamScore;
-                document.getElementById('team-wickets').textContent = `/${teamWickets}`;
-                document.getElementById('team-overs').textContent = `(${teamOvers})`;
-
-                document.getElementById('secondInnings').style.display = 'none';
-                document.getElementById('result').style.display = 'none';
-            }
-            else
-            {
-                // Second Innings
-
-                teamName = data.values.t2Name || 'Team 2';
-                teamScore = data.values.t2Total || '0';
-                teamWickets = data.values.t2Wickets || '0';
-                teamOvers = data.values.t2Overs || '0.0';
-
-                document.getElementById('team-name').textContent = teamName;
-                document.getElementById('team-score').textContent = teamScore;
-                document.getElementById('team-wickets').textContent = `/${teamWickets}`;
-                document.getElementById('team-overs').textContent = `(${teamOvers})`;
-
-                const team1Name = data.values.t1Name || 'Team 1';
-                const team1Score = data.values.t1Total || '0';
-                const team1Wickets = data.values.t1Wickets || '0';
-                const team1Overs = data.values.t1Overs || '0.0';
-
-                document.getElementById('second-team-name').textContent = team1Name;
-                document.getElementById('second-team-score').textContent = team1Score;
-                document.getElementById('second-team-wickets').textContent = team1Wickets;
-                document.getElementById('second-team-overs').textContent = `(${team1Overs})`;
-
-                const scoreNeeded = data.values.showMsgForScoreNeeded || '-';
-                document.getElementById('score-needed').innerHTML = `${scoreNeeded}`;
-
-                if (data.values.isMatchEnded === "0")
-                {
-                    // Second Innings
-
-                    document.getElementById('secondInnings').style.display = 'flex';
-                    document.getElementById('result').style.display = 'none';
-                }
-                else
-                {
-
-                    // Match ended
-                    const matchResult = data.values.result || 'Match Result';
-                    document.getElementById('match-result').textContent = `${matchResult}`;
-                    document.getElementById('score-needed').style.display = 'none';
-                    // document.getElementById('batsman-info').style.display = 'none';
-                    // document.getElementById('bowler-info').style.display = 'none';
-
-                    document.getElementById('secondInnings').style.display = 'flex';
-                    document.getElementById('result').style.display = 'flex';
-                }
-            }
-
-            // Update Ball-by-ball indicators
-            const ballContainer = document.getElementById('ball-by-ball');
-            ballContainer.innerHTML = ''; // Clear existing indicators
-
-            for (const element of ballsArray) {
-                const ballOutcome = element;
-                const ballIndicator = document.createElement('div');
-                ballIndicator.classList.add('ball-indicator');
-                ballIndicator.textContent = ballOutcome
-                ballIndicator.classList.add(getBallStyleClass(ballOutcome));
-                ballContainer.appendChild(ballIndicator);
-            }
-
-            const ballsRemaining = 6 - teamOvers.split('.')[1];
-            if (ballsRemaining === 6 && ballsArray.length > 1 )
-            {
-                // Game ended with complete over example - matchId=1963
-            }
-            else
-            {
-            for (let i=0;i<ballsRemaining;i++) {
-                const ballIndicator = document.createElement('div');
-                ballIndicator.classList.add('ball-indicator');
-                ballContainer.appendChild(ballIndicator);
-            }
-            }
-
-        })
-        .catch(error => {
-            console.error('Error fetching score data:', error);
-            document.getElementById('team-name').textContent = 'Error';
-        });
-    }
-
-
-function getBallStyleClass(ballOutcome) {
-    ballOutcome = ballOutcome.toLowerCase(); // Still convert to lowercase for easier comparison
-
-    if (ballOutcome === 'w') {
-        return 'wicket'; // Wicket (W, wicket, out)
-    } else if (ballOutcome === 'wd' || ballOutcome.endsWith('wd')) { // Wide (wd, ends with wd)
-        return 'wide';
-    } else if (ballOutcome === 'nb' || ballOutcome.endsWith('nb')) { // No Ball (nb, ends with nb)
-        return 'no-ball';
-    } else if (ballOutcome === '1lb' || ballOutcome.endsWith('lb')) { // Leg Bye (1lb, ends with lb)
-        return 'leg-bye';
-    } else if (ballOutcome === '1b' || ballOutcome.endsWith('b')) { // Bye (nb, ends with nb, no-ball)
-        return 'bye';
-    } else if (ballOutcome === '.') {
-        return 'dot'; // Dot (.) or dot
-    } else if (['1', '2', '3', '4', '5', '6'].includes(ballOutcome)) { // Runs (numbers "1" to "6" directly)
-        return `run-${ballOutcome}`;
-    }
-    return 'ball-default'; // Default for any unhandled outcomes
+    return {
+        matchId: urlParams.get('matchId'),
+        clubId: urlParams.get('cId') || CONFIG.DEFAULT_CLUB_ID,
+        logo: urlParams.get('logo'),
+        debug: urlParams.get('debug') === 'true'
+    };
 }
 
-function loadImage(url) {
+function updateLogo(logoParam) {
+    if (!logoParam) {
+        DOM.overlayImage.style.display = 'none';
+    } else {
+        DOM.overlayImage.src = CONFIG.LOGO_MAP[logoParam] || '';
+        DOM.overlayImage.style.display = 'block';
+    }
+}
+
+async function loadImage(url) {
     return new Promise((resolve, reject) => {
         const img = new Image();
         img.onload = () => resolve(img);
@@ -242,5 +70,152 @@ function loadImage(url) {
     });
 }
 
-updateScore(); // Initial call
-setInterval(updateScore, 5000); // Update every 5 seconds
+async function updateTeamLogos(data) {
+    const team1LogoUrl = `https://cricclubs.com${data.values.firstLogo || ''}`;
+    const team2LogoUrl = `https://cricclubs.com${data.values.secondLogo || ''}`;
+
+    if (imageCache.team1Logo.url !== team1LogoUrl || !imageCache.team1Logo.image) {
+        try {
+            const img = await loadImage(team1LogoUrl);
+            imageCache.team1Logo = { url: team1LogoUrl, image: img };
+            DOM.battingTeamLogo.src = img.src;
+        } catch (error) {
+            console.error('Error loading first logo:', error);
+        }
+    }
+
+    if (imageCache.team2Logo.url !== team2LogoUrl || !imageCache.team2Logo.image) {
+        try {
+            const img = await loadImage(team2LogoUrl);
+            imageCache.team2Logo = { url: team2LogoUrl, image: img };
+            DOM.bowlingTeamLogo.src = img.src;
+        } catch (error) {
+            console.error('Error loading second logo:', error);
+        }
+    }
+}
+
+function getBallStyleClass(ballOutcome) {
+    const outcome = ballOutcome.toLowerCase();
+    if (outcome === 'w') return 'wicket';
+    if (outcome === 'wd' || outcome.endsWith('wd')) return 'wide';
+    if (outcome === 'nb' || outcome.endsWith('nb')) return 'no-ball';
+    if (outcome === '1lb' || outcome.endsWith('lb')) return 'leg-bye';
+    if (outcome === '1b' || outcome.endsWith('b')) return 'bye';
+    if (outcome === '.') return 'dot';
+    if (['1', '2', '3', '4', '5', '6'].includes(outcome)) return `run-${outcome}`;
+    return 'ball-default';
+}
+
+function updateBallByBall(ballsArray, teamOvers) {
+    DOM.ballContainer.innerHTML = '';
+    
+    ballsArray.forEach(ballOutcome => {
+        const ballIndicator = document.createElement('div');
+        ballIndicator.className = `ball-indicator ${getBallStyleClass(ballOutcome)}`;
+        ballIndicator.textContent = ballOutcome;
+        DOM.ballContainer.appendChild(ballIndicator);
+    });
+
+    const ballsRemaining = 6 - (teamOvers.split('.')[1] || 0);
+    if (ballsRemaining < 6 || ballsArray.length <= 1) {
+         for (let i = 0; i < ballsRemaining; i++) {
+            const ballIndicator = document.createElement('div');
+            ballIndicator.classList.add('ball-indicator');
+            DOM.ballContainer.appendChild(ballIndicator);
+        }
+    }
+}
+
+function updateScoreboard(data) {
+    // Batsman Info
+    DOM.batsman1Name.textContent = `${data.values.batsman1Name || 'Batsman 1'} *`;
+    DOM.batsman1RunsBalls.textContent = `${data.values.batsman1Runs || '0'} (${data.values.batsman1Balls || '0'})`;
+    DOM.batsman2Name.textContent = data.values.batsman2Name || 'Batsman 2';
+    DOM.batsman2RunsBalls.textContent = `${data.values.batsman2Runs || '0'} (${data.values.batsman2Balls || '0'})`;
+
+    // Bowler Info
+    DOM.bowlerName.textContent = data.values.bowlerName || 'Bowler Name';
+    DOM.bowlerFigures.textContent = `${data.values.bowlerWickets || '0'}-${data.values.bowlerRuns || '0'} (${data.values.bowlerOvers || '0.0'})`;
+
+    // Innings Info
+    if (data.values.isSecondInningsStarted === "false") {
+        // First Innings
+        DOM.teamName.textContent = data.values.t1Name || 'Team 1';
+        DOM.teamScore.textContent = data.values.t1Total || '0';
+        DOM.teamWickets.textContent = `/${data.values.t1Wickets || '0'}`;
+        DOM.teamOvers.textContent = `(${data.values.t1Overs || '0.0'})`;
+
+        DOM.secondInnings.style.display = 'none';
+        DOM.result.style.display = 'none';
+    } else {
+        // Second Innings
+        DOM.teamName.textContent = data.values.t2Name || 'Team 2';
+        DOM.teamScore.textContent = data.values.t2Total || '0';
+        DOM.teamWickets.textContent = `/${data.values.t2Wickets || '0'}`;
+        DOM.teamOvers.textContent = `(${data.values.t2Overs || '0.0'})`;
+
+        DOM.secondTeamName.textContent = data.values.t1Name || 'Team 1';
+        DOM.secondTeamScore.textContent = data.values.t1Total || '0';
+        DOM.secondTeamWickets.textContent = data.values.t1Wickets || '0';
+        DOM.secondTeamOvers.textContent = `(${data.values.t1Overs || '0.0'})`;
+
+        DOM.scoreNeeded.innerHTML = data.values.showMsgForScoreNeeded || '-';
+
+        if (data.values.isMatchEnded === "0") {
+            DOM.secondInnings.style.display = 'flex';
+            DOM.result.style.display = 'none';
+            DOM.scoreNeeded.style.display = 'block';
+        } else {
+            DOM.matchResult.textContent = data.values.result || 'Match Result';
+            DOM.scoreNeeded.style.display = 'none';
+            DOM.secondInnings.style.display = 'flex';
+            DOM.result.style.display = 'flex';
+        }
+    }
+
+    updateBallByBall(data.balls || [], data.values.t1Overs || '0.0'); // Note: t1Overs might need to be dynamic based on innings
+}
+
+async function fetchScoreData(apiUrl) {
+    const response = await fetch(apiUrl);
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return response.json();
+}
+
+async function updateScore() {
+    const params = getQueryParams();
+    updateLogo(params.logo);
+
+    if (!params.matchId && !params.debug) {
+        console.error('matchId query parameter is missing in the URL.');
+        DOM.teamName.textContent = 'Missing matchId';
+        return;
+    }
+
+    try {
+        let data;
+        if (params.debug) {
+            // Use mock data for debugging
+            data = mock_1stInnings; // Or rotate/select based on some logic
+             // console.log('Using mock data');
+        } else {
+            const apiUrl = `https://cricclubs.com/liveScoreOverlayData.do?clubId=${params.clubId}&matchId=${params.matchId}`;
+            data = await fetchScoreData(apiUrl);
+        }
+
+        await updateTeamLogos(data);
+        updateScoreboard(data);
+
+    } catch (error) {
+        console.error('Error fetching score data:', error);
+        DOM.teamName.textContent = 'Error';
+    }
+}
+
+// Initial call
+updateScore();
+// Update loop
+setInterval(updateScore, CONFIG.REFRESH_RATE);
