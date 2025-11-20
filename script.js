@@ -48,8 +48,18 @@ function getQueryParams() {
         matchId: urlParams.get('matchId'),
         clubId: urlParams.get('cId') || CONFIG.DEFAULT_CLUB_ID,
         logo: urlParams.get('logo'),
-        debug: urlParams.get('debug') === 'true'
+        debug: urlParams.get('debug'), // Returns string value or null
+        theme: urlParams.get('theme')
     };
+}
+
+function applyTheme(theme) {
+    const themeLink = document.getElementById('theme-stylesheet');
+    if (theme === 'classic') {
+        themeLink.href = 'theme-classic.css';
+    } else {
+        themeLink.href = 'theme-modern.css';
+    }
 }
 
 function updateLogo(logoParam) {
@@ -109,7 +119,7 @@ function getBallStyleClass(ballOutcome) {
 
 function updateBallByBall(ballsArray, teamOvers) {
     DOM.ballContainer.innerHTML = '';
-    
+
     ballsArray.forEach(ballOutcome => {
         const ballIndicator = document.createElement('div');
         ballIndicator.className = `ball-indicator ${getBallStyleClass(ballOutcome)}`;
@@ -119,7 +129,7 @@ function updateBallByBall(ballsArray, teamOvers) {
 
     const ballsRemaining = 6 - (teamOvers.split('.')[1] || 0);
     if (ballsRemaining < 6 || ballsArray.length <= 1) {
-         for (let i = 0; i < ballsRemaining; i++) {
+        for (let i = 0; i < ballsRemaining; i++) {
             const ballIndicator = document.createElement('div');
             ballIndicator.classList.add('ball-indicator');
             DOM.ballContainer.appendChild(ballIndicator);
@@ -187,6 +197,7 @@ async function fetchScoreData(apiUrl) {
 
 async function updateScore() {
     const params = getQueryParams();
+    applyTheme(params.theme);
     updateLogo(params.logo);
 
     if (!params.matchId && !params.debug) {
@@ -198,9 +209,24 @@ async function updateScore() {
     try {
         let data;
         if (params.debug) {
-            // Use mock data for debugging
-            data = mock_1stInnings; // Or rotate/select based on some logic
-             // console.log('Using mock data');
+            // Mock Data Logic
+            switch (params.debug) {
+                case '2':
+                    data = mock_2ndInnings;
+                    break;
+                case '3':
+                    data = mock_matchEnded;
+                    break;
+                case '4':
+                    data = mock_toss;
+                    break;
+                case '1':
+                case 'true':
+                default:
+                    data = mock_1stInnings;
+                    break;
+            }
+            console.log(`Using mock data: ${params.debug}`);
         } else {
             const apiUrl = `https://cricclubs.com/liveScoreOverlayData.do?clubId=${params.clubId}&matchId=${params.matchId}`;
             data = await fetchScoreData(apiUrl);
