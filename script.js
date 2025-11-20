@@ -117,7 +117,15 @@ function getBallStyleClass(ballOutcome) {
     return 'ball-default';
 }
 
+let lastBallState = { balls: '', overs: '' };
+
 function updateBallByBall(ballsArray, teamOvers) {
+    const currentBallsJson = JSON.stringify(ballsArray);
+    if (currentBallsJson === lastBallState.balls && teamOvers === lastBallState.overs) {
+        return;
+    }
+    lastBallState = { balls: currentBallsJson, overs: teamOvers };
+
     DOM.ballContainer.innerHTML = '';
 
     ballsArray.forEach(ballOutcome => {

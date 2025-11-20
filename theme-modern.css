@@ -23,7 +23,7 @@
     --ball-default: #eceff1;
     --ball-run: #2962ff;
     --ball-four: #00c853;
-    --ball-six: #d500f9;
+    --ball-six: #00c853;
     --ball-wicket: #d50000;
     --ball-wide: #ff6d00;
     --ball-noball: #ffab00;
@@ -288,10 +288,15 @@ body {
     background-color: var(--ball-default);
     color: transparent;
     position: relative;
+    font-size: 0;
 }
 
 .ball-indicator.dot::after {
     content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     width: 8px;
     height: 8px;
     background-color: var(--text-light);

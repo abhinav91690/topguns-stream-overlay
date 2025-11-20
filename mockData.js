@@ -127,7 +127,7 @@ export const mock_toss = {
     "isSecondInningsStarted": false,
     "isSuperOver": false,
     "isSuperOverSecondInningsStarted": false,
-    "balls": [],
+    "balls": ["1", "4", ".", "W", "6", "1"],
     "is2XCricket": false,
     "sponsorsImgPaths": [],
     "isAutoSwitchEnabled": 0
@@ -170,7 +170,7 @@ export const mock_1stInnings = {
         "overs": "5.0",
         "lastOutBalls": "18",
         "batsman2Fours": "1",
-        "result": "Stags: 70/1 (5.0/20 OVERS )  ",
+        "result": "Stags: 70/1 (5.5/20 OVERS )  ",
         "bowlerID": 2891590,
         "batsman1LastName": "Manthri",
         "revisedOvers": 0,
@@ -264,7 +264,7 @@ export const mock_1stInnings = {
     "isSecondInningsStarted": false,
     "isSuperOver": false,
     "isSuperOverSecondInningsStarted": false,
-    "balls": [],
+    "balls": [".", "1", "4", "2", "1", "1wd"],
     "is2XCricket": false,
     "sponsorsImgPaths": [],
     "isAutoSwitchEnabled": 0
@@ -400,7 +400,7 @@ export const mock_2ndInnings = {
     "isSecondInningsStarted": true,
     "isSuperOver": false,
     "isSuperOverSecondInningsStarted": false,
-    "balls": [],
+    "balls": ["6", "6", "4", "1", "W", "."],
     "is2XCricket": false,
     "sponsorsImgPaths": [],
     "isAutoSwitchEnabled": 0
