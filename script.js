@@ -164,7 +164,7 @@ function updateScoreboard(data) {
         // First Innings
         DOM.teamName.textContent = data.values.t1Name || 'Team 1';
         DOM.teamScore.textContent = data.values.t1Total || '0';
-        DOM.teamWickets.textContent = `/${data.values.t1Wickets || '0'}`;
+        DOM.teamWickets.textContent = `/ ${data.values.t1Wickets || '0'}`;
         DOM.teamOvers.textContent = `${data.values.t1Overs || '0.0'}`;
 
         DOM.secondInnings.style.display = 'none';
@@ -173,7 +173,7 @@ function updateScoreboard(data) {
         // Second Innings
         DOM.teamName.textContent = data.values.t2Name || 'Team 2';
         DOM.teamScore.textContent = data.values.t2Total || '0';
-        DOM.teamWickets.textContent = `/${data.values.t2Wickets || '0'}`;
+        DOM.teamWickets.textContent = `/ ${data.values.t2Wickets || '0'}`;
         DOM.teamOvers.textContent = `${data.values.t2Overs || '0.0'}`;
 
         DOM.secondTeamName.textContent = data.values.t1Name || 'Team 1';

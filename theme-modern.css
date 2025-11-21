@@ -117,11 +117,14 @@ body {
     align-items: center;
     justify-content: center;
     padding: 10px 30px;
-    background: var(--gradient-primary);
+    background: linear-gradient(135deg, rgba(41, 98, 255, 0.85), rgba(0, 57, 203, 0.85));
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     color: var(--text-white);
     border-radius: var(--radius-large);
     min-width: 200px;
-    box-shadow: var(--shadow-card);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
     position: relative;
     overflow: hidden;
 }
@@ -331,7 +334,7 @@ body {
     background: var(--gradient-dark);
     color: var(--text-white);
     padding: 10px 25px;
-    border-radius: var(--radius-pill);
+    border-radius: var(--radius-large);
     font-size: 16px;
     font-weight: 600;
     letter-spacing: 0.5px;
