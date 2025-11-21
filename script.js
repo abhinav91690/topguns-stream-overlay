@@ -20,6 +20,8 @@ const DOM = {
     batsman2RunsBalls: document.getElementById('batsman2-runs-balls'),
     bowlerName: document.getElementById('bowler-name'),
     bowlerFigures: document.getElementById('bowler-figures'),
+    bowlerWicketsRuns: document.getElementById('bowler-wickets-runs'),
+    bowlerOvers: document.getElementById('bowler-overs'),
     teamName: document.getElementById('team-name'),
     teamScore: document.getElementById('team-score'),
     teamWickets: document.getElementById('team-wickets'),
@@ -154,7 +156,8 @@ function updateScoreboard(data) {
 
     // Bowler Info
     DOM.bowlerName.textContent = data.values.bowlerName || 'Bowler Name';
-    DOM.bowlerFigures.textContent = `${data.values.bowlerWickets || '0'}-${data.values.bowlerRuns || '0'} (${data.values.bowlerOvers || '0.0'})`;
+    DOM.bowlerWicketsRuns.textContent = `${data.values.bowlerWickets || '0'}-${data.values.bowlerRuns || '0'}`;
+    DOM.bowlerOvers.textContent = `${data.values.bowlerOvers || '0.0'}`;
 
     // Innings Info
     if (data.values.isSecondInningsStarted === "false") {
@@ -162,7 +165,7 @@ function updateScoreboard(data) {
         DOM.teamName.textContent = data.values.t1Name || 'Team 1';
         DOM.teamScore.textContent = data.values.t1Total || '0';
         DOM.teamWickets.textContent = `/${data.values.t1Wickets || '0'}`;
-        DOM.teamOvers.textContent = `(${data.values.t1Overs || '0.0'})`;
+        DOM.teamOvers.textContent = `${data.values.t1Overs || '0.0'}`;
 
         DOM.secondInnings.style.display = 'none';
         DOM.result.style.display = 'none';
@@ -171,12 +174,12 @@ function updateScoreboard(data) {
         DOM.teamName.textContent = data.values.t2Name || 'Team 2';
         DOM.teamScore.textContent = data.values.t2Total || '0';
         DOM.teamWickets.textContent = `/${data.values.t2Wickets || '0'}`;
-        DOM.teamOvers.textContent = `(${data.values.t2Overs || '0.0'})`;
+        DOM.teamOvers.textContent = `${data.values.t2Overs || '0.0'}`;
 
         DOM.secondTeamName.textContent = data.values.t1Name || 'Team 1';
         DOM.secondTeamScore.textContent = data.values.t1Total || '0';
         DOM.secondTeamWickets.textContent = data.values.t1Wickets || '0';
-        DOM.secondTeamOvers.textContent = `(${data.values.t1Overs || '0.0'})`;
+        DOM.secondTeamOvers.textContent = `${data.values.t1Overs || '0.0'}`;
 
         DOM.scoreNeeded.innerHTML = data.values.showMsgForScoreNeeded || '-';
 
