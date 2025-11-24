@@ -5,8 +5,8 @@ const CONFIG = {
     REFRESH_RATE: 5000,
     DEFAULT_CLUB_ID: '1089463', // LPCL
     LOGO_MAP: {
-        '1': './images/PulteHomes.png',
-        '2': './images/PerryHomes.png',
+        '1': '../assets/images/PulteHomes.png',
+        '2': '../assets/images/PerryHomes.png',
     }
 };
 
@@ -58,9 +58,9 @@ function getQueryParams() {
 function applyTheme(theme) {
     const themeLink = document.getElementById('theme-stylesheet');
     if (theme === 'classic') {
-        themeLink.href = 'theme-classic.css';
+        themeLink.href = 'css/theme-classic.css';
     } else {
-        themeLink.href = 'theme-modern.css';
+        themeLink.href = 'css/theme-modern.css';
     }
 }
 
