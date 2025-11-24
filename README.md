@@ -28,6 +28,7 @@ Customize the overlay using the following URL parameters:
 | `theme` | The visual style of the overlay. Options: `modern`, `classic`. | `modern` | `?theme=classic` |
 | `logo` | Displays a pre-configured sponsor/tournament logo. | None | `?logo=1` |
 | `debug` | Uses mock data for testing without a live match. | None | `?debug=1` |
+| `mode` | Enable special modes like `replay`. | `?mode=replay` |
 
 ## Themes
 

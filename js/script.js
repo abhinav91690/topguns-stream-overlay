@@ -1,5 +1,6 @@
 // script.js
 import { mock_1stInnings, mock_2ndInnings, mock_matchEnded, mock_toss } from './mockData.js';
+import { sampleReplayData } from './replayData.js';
 
 const CONFIG = {
     REFRESH_RATE: 5000,
@@ -44,6 +45,8 @@ const imageCache = {
     team2Logo: { url: null, image: null },
 };
 
+let replayIndex = 0;
+
 function getQueryParams() {
     const urlParams = new URLSearchParams(window.location.search);
     return {
@@ -51,7 +54,8 @@ function getQueryParams() {
         clubId: urlParams.get('cId') || CONFIG.DEFAULT_CLUB_ID,
         logo: urlParams.get('logo'),
         debug: urlParams.get('debug'), // Returns string value or null
-        theme: urlParams.get('theme')
+        theme: urlParams.get('theme'),
+        mode: urlParams.get('mode')
     };
 }
 
@@ -211,6 +215,13 @@ async function updateScore() {
     applyTheme(params.theme);
     updateLogo(params.logo);
 
+    if (params.mode === 'replay') {
+        const data = sampleReplayData[replayIndex];
+        updateScoreboard(data);
+        replayIndex = (replayIndex + 1) % sampleReplayData.length;
+        return;
+    }
+
     if (!params.matchId && !params.debug) {
         console.error('matchId query parameter is missing in the URL.');
         DOM.teamName.textContent = 'Missing matchId';
@@ -255,4 +266,4 @@ async function updateScore() {
 // Initial call
 updateScore();
 // Update loop
-setInterval(updateScore, CONFIG.REFRESH_RATE);
+setInterval(updateScore, refreshRate);
