@@ -264,7 +264,7 @@ export const mock_1stInnings = {
     "isSecondInningsStarted": false,
     "isSuperOver": false,
     "isSuperOverSecondInningsStarted": false,
-    "balls": [".", "1", "4", "2", "1", "1wd"],
+    "balls": [],
     "is2XCricket": false,
     "sponsorsImgPaths": [],
     "isAutoSwitchEnabled": 0
