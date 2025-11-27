@@ -266,4 +266,4 @@ async function updateScore() {
 // Initial call
 updateScore();
 // Update loop
-setInterval(updateScore, refreshRate);
+setInterval(updateScore, CONFIG.REFRESH_RATE);
