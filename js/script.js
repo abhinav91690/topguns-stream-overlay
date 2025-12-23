@@ -1,5 +1,5 @@
 // script.js
-import { mock_1stInnings, mock_2ndInnings, mock_matchEnded, mock_toss } from './mockData.js';
+import { mock_1stInnings, mock_2ndInnings, mock_matchEnded, mock_toss, mock_noTeamImage } from './mockData.js';
 import { sampleReplayData } from './replayData.js';
 
 const CONFIG = {
@@ -69,11 +69,12 @@ function applyTheme(theme) {
 }
 
 function updateLogo(logoParam) {
-    if (!logoParam) {
-        DOM.overlayImage.style.display = 'none';
-    } else {
-        DOM.overlayImage.src = CONFIG.LOGO_MAP[logoParam] || '';
+    const logoUrl = CONFIG.LOGO_MAP[logoParam];
+    if (logoUrl) {
+        DOM.overlayImage.src = logoUrl;
         DOM.overlayImage.style.display = 'block';
+    } else {
+        DOM.overlayImage.style.display = 'none';
     }
 }
 
@@ -87,8 +88,16 @@ async function loadImage(url) {
 }
 
 async function updateTeamLogos(data) {
-    const team1LogoUrl = `https://cricclubs.com${data.values.firstLogo || ''}`;
-    const team2LogoUrl = `https://cricclubs.com${data.values.secondLogo || ''}`;
+    const getFullUrl = (path) => {
+        if (!path) return '';
+        if (path.startsWith('http://') || path.startsWith('https://')) {
+            return path;
+        }
+        return `https://cricclubs.com${path}`;
+    };
+
+    const team1LogoUrl = getFullUrl(data.values.firstLogo);
+    const team2LogoUrl = getFullUrl(data.values.secondLogo);
 
     if (imageCache.team1Logo.url !== team1LogoUrl || !imageCache.team1Logo.image) {
         try {
@@ -199,7 +208,10 @@ function updateScoreboard(data) {
         }
     }
 
-    updateBallByBall(data.balls || [], data.values.t1Overs || '0.0'); // Note: t1Overs might need to be dynamic based on innings
+    const currentOvers = data.values.isSecondInningsStarted === "true"
+        ? data.values.t2Overs
+        : data.values.t1Overs;
+    updateBallByBall(data.balls || [], currentOvers || '0.0');
 }
 
 async function fetchScoreData(apiUrl) {
@@ -241,6 +253,9 @@ async function updateScore() {
                     break;
                 case '4':
                     data = mock_toss;
+                    break;
+                case '5':
+                    data = mock_noTeamImage;
                     break;
                 case '1':
                 case 'true':
